@@ -1,3 +1,0 @@
-D:/study/cplusplus/test/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-D:/study/cplusplus/test/cmake-build-debug/CMakeFiles/test.dir
-D:/study/cplusplus/test/cmake-build-debug/CMakeFiles/edit_cache.dir
