@@ -6,8 +6,8 @@
             "command": "/usr/bin/g++",
             "args": [
                 // "--save-temps",//product ->*.i -> *.s -> *.o -> a.out
-                "-Wall",
-                "-pedantic",
+                "-Wall",//all warning
+                // "-pedantic",
                 // "-Werror ",
                 "-Wextra ",
                 "-fdiagnostics-color=always",
