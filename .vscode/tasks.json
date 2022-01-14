@@ -7,7 +7,7 @@
             "args": [
                 // "--save-temps",//product ->*.i -> *.s -> *.o -> a.out
                 "-Wall",//all warning
-                // "-pedantic",
+                "-pedantic",
                 // "-Werror ",
                 "-Wextra ",
                 "-fdiagnostics-color=always",
