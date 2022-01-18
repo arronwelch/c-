@@ -24,7 +24,6 @@ vector<double> v {1.2, 3.4, 4.5};   // v is not a constant
 const double s1 = sum(v);           // OK, evaluated at run time
 // constexpr double s2 = sum(v);           // error:sum(v) not constant expression
 
-
 int main()
 {
     cout << "17*17 = " << 1.4 * 17 * 17 << "\n";
