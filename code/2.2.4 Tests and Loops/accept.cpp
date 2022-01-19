@@ -102,11 +102,11 @@ void increment()
 
 typedef int32_t T;
 #define n 10
-int rt = 0;
+int rts = 0;
 
 T at[n];//  array of n T
 T *pt; // pointer to T
-// T &rt; // reference to T
+T &rt = rts; // reference to T rts
 T ft(void); // function taking an argument of type A returning a result of type T
 
 int main()
