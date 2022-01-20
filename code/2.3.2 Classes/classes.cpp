@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-struct Vector
+class Vector
 {
 private:
     double *elem; // pointer to the elements
