@@ -1,3 +1,6 @@
+// The test4.cpp Program
+
+/* test4.cpp -- Abstraction */
 
 #include <iostream>
 
@@ -65,12 +68,18 @@ public:
 protected:
 };
 
+class Developer: Emloyee {
+pubilc:
+	string FavProgrammingLanguage;
+};
+
 int main(void)
 {
 	Employee employee1 = Employee("Saldina", "YT-CodeBeaty", 25);
 	Employee employee2 = Employee("John", "Amazon", 35);
-	employee1.AskForPromotion();
-	employee2.AskForPromotion();
+//	employee1.AskForPromotion();
+//	employee2.AskForPromotion();
+	Developer d;
 
 	return 0;
 }
