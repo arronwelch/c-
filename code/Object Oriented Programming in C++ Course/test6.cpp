@@ -1,6 +1,6 @@
-// The test5.cpp Program
+// The test6.cpp Program
 
-/* test5.cpp -- Inheritance */
+/* test6.cpp -- Polymorphism */
 
 #include <iostream>
 
@@ -67,6 +67,12 @@ public:
 			std::cout << Name << ", sorry No promotion for you!" << std::endl;
 		}
 	}
+//	void Work() {
+//		std::cout << Name << " is checking email, task backlog, performing tasks..." << std::endl;
+//	}
+	virtual void Work() {
+		std::cout << Name << " is checking email, task backlog, performing tasks..." << std::endl;
+	}
 protected:
 };
 
@@ -83,6 +89,9 @@ public:
 //		std::cout << getName() << " fixed bug using " << FavProgrammingLanguage << std::endl;
 		std::cout << Name << " fixed bug using " << FavProgrammingLanguage << std::endl;
 	}
+	void Work() {
+		std::cout << Name << " is writting "<< FavProgrammingLanguage << " code" << std::endl;
+	}
 };
 
 class Teacher:public Employee {
@@ -96,17 +105,22 @@ public:
 	{
 		Subject = subject;
 	}
+	void Work() {
+		std::cout << Name << " is teaching "<< Subject << std::endl;
+	}
 };
 
 int main(void)
 {
 	Developer d = Developer("Saldina", "YT-CodeBeauty", 25, "C++");
-	d.FixBug();
-	d.AskForPromotion();
-
 	Teacher t = Teacher("Jack", "Cool School", 35, "History");
-	t.PrepareLesson();
-	t.AskForPromotion();
+	// d.Work();
+	// t.Work();
+
+	Employee* e1 = &d;
+	Employee* e2 = &t;
+	e1->Work();
+	e2->Work();
 
 	return 0;
 }
