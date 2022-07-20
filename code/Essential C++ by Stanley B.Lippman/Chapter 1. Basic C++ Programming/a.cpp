@@ -51,10 +51,57 @@ int main(void)
     // contained within the vector elem_seq
     cout << "The first " << elem_seq.size()
          << " elements of the Pell Series\n\t";
-    
+
     for (int  ix = 0; ix < elem_seq.size(); ix++)
         cout << elem_seq[ix] << ' ';
     cout << '\n'; 
+
+    int cur_tuple = 0;
+
+    bool next_seq = true;
+    int usr_guess;
+    char usr_rsp;
+
+    while (next_seq == true &&
+           cur_tuple < seq_size)
+    {
+        cout << "The first two elements of the sequence are: "
+             << elem_seq[cur_tuple] << ", "
+             << elem_seq[cur_tuple + 1]
+             << "\nWhat is the next element? ";
+        // ...
+        cin >> usr_guess;
+        if (usr_guess == elem_seq[cur_tuple + 2])
+            // correct!
+            cout << "correct!\n";
+        // ...
+        cout << "Want to try another sequence? (Y/N)\n";
+        cin >> usr_rsp;
+
+        if (usr_rsp == 'N' || usr_rsp == 'n')
+            next_seq = false;
+        else cur_tuple += 3;
+    }
+
+    const int max_seq = 6;
+    string seq_names[max_seq] = {
+        "Fibonacci",
+        "Lucas",
+        "Pell",
+        "Triangular",
+        "Square",
+        "Pentagonal"
+    };
+
+    int num_cor;
+    if (usr_guess == elem_seq[cur_tuple + 2])
+    {
+        ++num_cor;
+        cout << "Very good. Yes, "
+             << elem_seq[cur_tuple + 2]
+             << " is the next element in the "
+             << seq_names[cur_tuple / 3] << " sequence.\n";
+    }
 
     return 0;
 }
