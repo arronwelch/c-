@@ -1,3 +1,5 @@
+// 1.5 How to Use Arrays and Vectors
+
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -10,7 +12,7 @@ int main(void)
     pell_seq_array[0] = 1; // assign 1 to first element
     pell_seq_array[1] = 2; // assign 2 to second element
 
-    for (int ix = 2; ix < seq_size; ix++)
+    for (int ix = 2; ix < seq_size; ++ix)
     {
         pell_seq_array[ix] = pell_seq_array[ix - 2] + 2*pell_seq_array[ix - 1];
     }
@@ -31,21 +33,30 @@ int main(void)
         5, 12, 22,   // Pentagonal
     };
 
-    // compiler computers a size of 18 elements
+    // compiler computes a size of 18 elements
     int elem_seq_style2[] = {
         1, 2,  3, 3, 4,  7, 2,  5, 12,
         3, 6, 10, 4, 9, 16, 5, 12, 22
     };
 
-    // compiler computers a size of 18 elements
+    vector<int> elem_seq_init(seq_size);
+    elem_seq_init[0] = 1;
+    elem_seq_init[1] = 2;
+    // ...
+    elem_seq_init[17] = 22;
+
+    // One alternative is to initialize a built-in array and use that to initialize
+    // the vector:
     int elem_val[seq_size] = {
         1, 2,  3, 3, 4,  7, 2,  5, 12,
         3, 6, 10, 4, 9, 16, 5, 12, 22
     };
 
+    // initialize elem_seq with values of elem_vals
     vector<int> elem_seq(elem_val, elem_val + seq_size);
 
-    cout << "elem_seq.size() = " << elem_seq.size(); // returns the number of elements
+    // elem_seq.size() returns the number of elements
+    cout << "elem_seq.size() = " << elem_seq.size(); 
     cout << '\n';
 
     // contained within the vector elem_seq
