@@ -115,5 +115,60 @@ int main(void)
 		cout << "Sorry. Could you not calculate element # "
 			 << pos << endl;
 
+	bool print_sequence(int pos);
+	print_sequence(pos);
+
+	void print_msg(ostream &os, const string &msg);
+	print_msg(cout, "Test print_msg\n");
+
 	return 0;
+}
+
+bool print_sequence(int pos)
+{
+	if (pos <=0 || pos > 1024)
+	{
+		cerr << "invalid position: " << pos
+			 << " -- cannot handle request!\n";
+		return false;
+	}
+	cout << "The Fabonacci Sequence for "
+		 << pos << " positions: \n\t";
+
+	// prints 1 1 for all values except pos == 1
+	switch (pos)
+	{
+		default:
+		case 2:
+			cout << "1 ";
+			// no break;
+		case 1:
+			cout << "1 ";
+			break;
+	}
+
+	int elem;
+	int n_2 = 1, n_1 = 1;
+	for (int ix = 3; ix <= pos; ++ix)
+	{
+		elem = n_2 + n_1;
+		n_2 = n_1; n_1 = elem;
+
+		// print 10 elements to a line
+		cout << elem << (!(ix % 10) ? "\n\t" : " ");
+	}
+	cout << endl;
+
+	// compiler error is generated here:
+	// implicit exit point ... no return statement!
+	return true;
+}
+
+void print_msg(ostream &os, const string &msg)
+{
+	if (msg.empty())
+		// nothing to print; terminate function ...
+		return;
+
+	os << msg;
 }
