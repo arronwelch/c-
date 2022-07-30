@@ -6,10 +6,22 @@
 
 using namespace std;
 
-void display(vector<int> vec)
+void display(const vector<int> &vec)
 {
 	for(int ix = 0; ix < vec.size(); ++ix)
 		cout << vec[ix] << ' ';
+	cout << endl;
+}
+
+void display(const vector<int> *vec)
+{
+	if (! vec)
+	{
+		cout << "display(): the vector pointer is 0\n";
+		return;
+	}
+	for(int ix = 0; ix < vec->size(); ++ix)
+		cout << (*vec)[ix] << ' ';
 	cout << endl;
 }
 
@@ -67,18 +79,76 @@ void bubble_sort(vector<int> &vec)
 			}
 }
 
+vector<int> fibon_seq(int size)
+{
+	if (size <= 0 || size > 1024)
+	{
+		cerr << "Warning: fibon_seq(): "
+			 << size << " not supported -- resetting to 8\n";
+		size = 8;
+	}
+
+	vector<int> elems(size);
+	for (int ix = 0; ix < size; ++ix)
+		if (ix == 0 || ix == 1)
+			elems[ix] = 1;
+		else elems[ix] = elems[ix - 1] + elems[ix - 2];
+
+	return elems;
+}
+
+extern int a; // declaration to the end of the file
+
 int main(void)
 {
 	int ia[8] = { 8, 34, 3, 13, 1, 21, 5, 2};
 	vector<int> vec(ia, ia+8);
 
 	cout << "vector before sort: ";
-	display(vec);
+	display(&vec);	// pass the address now
 
 	bubble_sort(vec);
 
 	cout << "vector after sort: ";
-	display(vec);
+	display(vec);	// pass by value or by reference?
+
+	int ival = 1024;	// an object of type int
+	int *pi = &ival;	// a pointer to an object of type int
+	int &rval = ival;	// a reference to an object of type int
+
+	cout << "before : rval = " << rval << endl;
+	cout << "before : ival = " << ival << endl;
+
+	int jval = 4096;
+	rval = jval;		// repair book error!!!
+	// we assign ival, the object rval refers to, the value stored by jval.
+	// We do not cause rval to now refer to jval.
+	// A reference cannot be reassigned to refer to another object.
+
+	cout << "after : rval = " << rval << endl;
+	cout << "after : ival = " << ival << endl;
+
+	ival = 2048;
+	pi = &rval;
+	// we assign pi the address of ival, the object rval refers to.
+	cout << "*pi = " << *pi << endl;
+
+	// returning elems by value is OK: The copy of the object returned exists 
+	// outside the function.
+	display(fibon_seq(-1));
+
+	cout << "a is a outside, has file scope: a = " << a << endl;
+
+	// int *pi;
+	// pi = new int;
+	pi = new int(1024);
+	cout << "*pi = " << *pi << endl;
+	delete pi;
+
+	int *pia = new int[24];
+	delete [] pia;
 
 	return 0;
 }
+
+int a = 1;
