@@ -13,3 +13,10 @@ cosnt vector<int>	*pent_seq(int size);
 // OK: this is a declaration
 const int seq_cnt = 6;
 extern const vector<int>* (*seq_array[seq_cnt])(int);
+
+#include "NumSeq.h"
+void test_it()
+{
+	int elem = 0;
+	if (seq_elem(1, elem) && elem == 1) // ...
+}
