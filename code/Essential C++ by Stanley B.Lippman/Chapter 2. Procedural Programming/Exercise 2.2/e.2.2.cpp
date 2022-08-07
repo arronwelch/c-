@@ -1,4 +1,4 @@
-// Exercise 2.2
+/* Exercise 2.2: e.2.2.cpp */
 
 /*
  * The formula for the Pentagonal numeric sequence is Pn=n*(3n-1)/2. This yields the sequence
@@ -10,53 +10,52 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
-vector<int>* pent_seq(int pos)
+bool calc_elements(vector<int> &vec, int pos);
+void display_elems(vector<int> &vec,
+					const string &title, ostream &os=cout);
+
+int main()
 {
-	const int max_size = 1024;
-	static vector<int> vec;
-	if (pos <= 0 || pos > max_size)
-	{
-		cout << "Oops: invalid position![pent_seq]" << endl;
-		return 0;
-	}
+	vector<int> pent;
+	const string title("Pentagonal Numeric Series");
 
-	for (int ix=vec.size(); ix < pos; ++ix)
-		vec.push_back((ix+1)*(3*(ix+1)-1)/2);
+	if (calc_elements(pent, 0))
+		display_elems(pent, title);
 
-	return &vec;
+	if (calc_elements(pent, 8))
+		display_elems(pent, title);
+
+	if (calc_elements(pent, 14))
+		display_elems(pent, title);
+
+	if (calc_elements(pent, 138))
+		display_elems(pent, title);
+
+	return 0;
 }
 
-bool pent_elem(int pos, int &elem)
+bool calc_elements(vector<int> &vec, int pos)
 {
-	vector<int>* seq_ptr = pent_seq(pos);
-	const int max_size = 1024;
-	if (pos <= 0 || pos > 1024)
-	{
-		cerr << "Oops: invalid position![pent_elem]" << endl;
+	if (pos <= 0 || pos > 64) {
+		cerr << "Sorry. Invalid position: " << pos << endl;
 		return false;
 	}
 
-	elem = (*seq_ptr)[pos-1];
+	for (int ix = vec.size()+1; ix <= pos; ++ix)
+		vec.push_back((ix*(3*ix-1))/2);
+
 	return true;
 }
 
-void display_vector(vector<int>& vec)
+void display_elems(vector<int> &vec,
+					const string &title, ostream &os)
 {
+	os << '\n' << title << "\n\t";
 	for (int ix = 0; ix < vec.size(); ++ix)
-		cout << vec[ix] << ' ';
-	cout << endl;
-}
-
-int main(void)
-{
-	const int pos = 5;
-	int elem = 0;
-	display_vector(*pent_seq(pos));
-	cout << pent_elem(pos, elem) << endl;
-	cout << elem << endl;
-
-	return 0;
+		os << vec[ix] << ' ';
+	os << endl;
 }
