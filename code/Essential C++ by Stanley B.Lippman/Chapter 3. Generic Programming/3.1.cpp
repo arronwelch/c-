@@ -39,4 +39,15 @@ elemType* find(const elemType *array, int size,
 			return &array[ix];
 
 	return 0; // value not found
+
+array[2];
+
+// returns the value of the third element of the array(indexing, remenber, begins at 0). The
+// following also returns the value of the third element:
+
+*(array + 2);
+
 }
+
+
+
