@@ -90,3 +90,8 @@ int			*pi = find(ia, ia+8, ia[3]);
 double		*pd = find(da, da+6, da[3]);
 string		*ps = find(sa, sa+4, sa[3]);
 
+vector<string> svec;
+
+find(&svec[0], &svec[svec.size()], search_value);
+
+if (! svec.empty()) // ... ok, call find()
