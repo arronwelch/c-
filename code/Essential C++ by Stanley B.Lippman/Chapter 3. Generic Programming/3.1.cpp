@@ -2,8 +2,12 @@
 
 #include <iostream>
 #include <vector>
+#include <iterator>
 
 using namespace std;
+
+template <typename elemType>
+void display(const vector<elemType> &vec, ostream &os);
 
 // int* find(const vector<int> &vec, int value)
 // {
@@ -119,5 +123,51 @@ int main(void)
 	cout << "*pd = " << *pd << endl;
 	cout << "*ps = " << *ps << endl;
 
+	// definition a string vector
+	vector<string> svec(sa,sa+4);
+
+	// the standard library iterator syntax
+	// iter addresses vector elements of type string
+	// it is initialied to the first element of svec
+
+	// one possible iterator syntax
+	// note: not actually used in the STL
+
+	// iterator< vector, string > iter; // invalid code
+	vector<string>::iterator iter;
+	for (iter = svec.begin();
+			iter != svec.end(); ++iter)
+				cout << *iter << ' ';
+	cout << endl;
+
+	string nm_sa[4] = { "test1", "test2", "test3", "test4" };
+	vector<string> nm_svec(nm_sa,nm_sa+4);
+	vector<string>::iterator nm_iter = nm_svec.begin();
+	for(;nm_iter != nm_svec.end(); ++nm_iter)
+		cout << *nm_iter << ' ';
+	cout << endl;
+
+	const vector<string> cs_svec(sa,sa+4);
+	vector<string>::const_iterator cs_iter = cs_svec.begin();
+	// A const_iterator allows us to read the vector elements but not write to them.
+	cout << "string value of element: " << *cs_iter << endl;
+	cout << "(" << cs_iter->size() << "): " << *cs_iter << endl;
+	for (; cs_iter != cs_svec.end(); ++cs_iter)
+		cout << *cs_iter << ' ';
+	cout << endl;
+
 	return 0;
+}
+
+template <typename elemType>
+void display(const vector<elemType> &vec, ostream &os)
+{
+	vector<elemType>::const_iterator iter = vec.begin();
+	vector<elemType>::const_iterator end_it = vec.end();
+
+	// if vec is empty, iter and end_it are equal
+	// and the for-loop never executes
+	for (; iter != end_it; ++iter)
+		os << *iter << ' ';
+	os << endl;
 }
