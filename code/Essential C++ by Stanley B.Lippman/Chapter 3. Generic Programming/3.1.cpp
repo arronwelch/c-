@@ -171,3 +171,37 @@ void display(const vector<elemType> &vec, ostream &os)
 		os << *iter << ' ';
 	os << endl;
 }
+
+template <typename IteratorType, typename elemType>
+IteratorType
+find(IteratorType first, IteratorType last,
+		const elemType &value)
+{
+	for (; first != last; ++first)
+		if (value == *first)
+			return first;
+
+	// return 0;
+	return last;
+}
+
+const int asize = 8;
+int ia[asize] = { 1, 1, 2, 3, 5, 8, 13, 21 };
+
+// initialize the list and vector with the 8 element of ia
+vector<int> ivec(ia, ia+asize);
+list<int> ilist(ia, ia+asize);
+
+int *pia = find(ia, ia+asize, 1024);
+if (pia != ia+asize)
+	// found ...
+
+vector<int>::iterator it;
+it = find(ivec.begin(), ivec.end(), 1024);
+if (it != ivec.end())
+	// found ...
+
+list<int>::iterator iter;
+iter = find(ilist.begin(), ilist.end(), 1024);
+if (iter != ilist.end())
+	// found ...
