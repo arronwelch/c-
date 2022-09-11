@@ -1,4 +1,4 @@
-// 3.2.2.cpp
+// 3.2.cpp
 
 #include <iostream>
 #include <vector>
