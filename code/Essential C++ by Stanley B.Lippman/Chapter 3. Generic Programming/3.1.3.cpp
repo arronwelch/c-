@@ -1,47 +1,46 @@
 // 3.1.3.cpp
 
-#include <iostream>
-#include <cstdio>
-#define SIZE_ONE 24
-#define SIZE_TWO 44
+#include <iostream>		// std::cout
+#include <cstdlib>		// std::rand()
 
-using namespace std;
+#define FIXED_SIZE 24
+#define SIZE 44
 
-int min_one(int array[SIZE_ONE])
+int min_fixed_size(int array[FIXED_SIZE])
 {
 	int min = array[0];
-	for (int ix =0; ix < SIZE_ONE; ++ix)
+	for (int ix =0; ix < FIXED_SIZE; ++ix)
 		if (array[ix] < min)
 			min = array[ix];
 
-	cout << "fixed size array!" << endl;
+	std::cout << "\"enter fixed size array!\"" << '\n';
 	return min;
 }
 
-int min_two(int *array)
+int min_unfixed_size(int *array, const int size)
 {
 	int min = array[0];
-	for (int ix =0; ix < SIZE_TWO; ++ix)
+	for (int ix =0; ix < size; ++ix)
 		if (array[ix] < min)
 			min = array[ix];
 
-	cout << "array size is None!" << endl;
+	std::cout << "\"array size is " << size << "\"\n";
 	return min;
 }
 
 int main(void)
 {
-	int array[SIZE_TWO];
+	int array[SIZE];
 
-	for (int ix = 0; ix < SIZE_TWO; ++ix)
-		array[ix] = rand() % 255;
+	for (int ix = 0; ix < SIZE; ++ix)
+		array[ix] = std::rand() % 255;
 
-	for (int ix = 0; ix < SIZE_TWO; ++ix)
-		cout << "\t" << ix << ":\t" << array[ix] << endl;
-	cout << endl;
+	for (int ix = 0; ix < SIZE; ++ix)
+		std::cout << "\t" << ix << ":\t" << array[ix] << '\n';
+	std::cout << '\n';
 
-	cout << "test size array min:" << min_one(array) << endl;
-	cout << "test NoneSize array min:" << min_two(array) << endl;
+	std::cout << "the array size is " << FIXED_SIZE << "\t the min = " << min_fixed_size(array) << '\n';
+	std::cout << "the array size is " << SIZE << "\t the min = " << min_unfixed_size(array, SIZE) << '\n';
 
 	return 0;
 }

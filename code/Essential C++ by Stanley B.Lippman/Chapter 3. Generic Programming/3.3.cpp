@@ -1,9 +1,7 @@
 // 3.3 Operations Common to All Containers
 
-#include <iostream>
-#include <vector>
-
-using namespace std;
+#include <iostream>		// std::cout
+#include <vector>		// std::vector
 
 // 1. The equality(==) and inequality(!=) operators return true of false.
 // 2. The assignment(=) operator copies one container into another.
@@ -11,7 +9,7 @@ using namespace std;
 // 4. size() returns a count of the elements currently held within the container.
 // 5. clear() deletes all the elements.
 
-void comp(vector<int> &v1, vector<int> &v2)
+void comp(std::vector<int> &v1, std::vector<int> &v2)
 {
 	// are the two vectors equal?
 	if (v1 == v2)
@@ -21,7 +19,7 @@ void comp(vector<int> &v1, vector<int> &v2)
 	if (v1.empty() || v2.empty()) return;
 
 	// no point defining it unless we are going to use it!
-	vector<int> t;
+	std::vector<int> t;
 
 	// assign t the largest vector
 	t = v1.size() > v2.size() ? v1 : v2;
@@ -47,47 +45,47 @@ int main(void)
 	const int ia1[5] = { 3, 6, 1, 9, 7 };
 	const int ia2[2] = { 1, 10 };
 
-	vector<int> ivec1(ia1,ia1+5),ivec2(ia2,ia2+2);
+	std::vector<int> ivec1(ia1,ia1+5),ivec2(ia2,ia2+2);
 	if ( ivec1 == ivec2 )
-		cout << "ivec1 is equal to ivec2" << endl;
+		std::cout << "ivec1 is equal to ivec2" << '\n';
 	else
-		cout << "ivec1 is not equal to ivec2" << endl;
+		std::cout << "ivec1 is not equal to ivec2" << '\n';
 
 	if ( ivec1.empty() )
-		cout << "ivec1 is empty" << endl;
+		std::cout << "ivec1 is empty" << '\n';
 	else
-		cout << "ivec1 is not empty" << endl;
+		std::cout << "ivec1 is not empty" << '\n';
 
-	vector<int> t;
+	std::vector<int> t;
 	t = ivec1.size() > ivec2.size() ? ivec1 : ivec2;
-	cout << "t.size() = " << t.size() << endl;
+	std::cout << "t.size() = " << t.size() << '\n';
 	for(int ix = 0; ix < t.size(); ++ix)
-		cout << t[ix] << ' ';
-	cout << endl;
+		std::cout << t[ix] << ' ';
+	std::cout << '\n';
 
 	t.clear();
-	cout << "t.size() = " << t.size() << endl;
+	std::cout << "t.size() = " << t.size() << '\n';
 	for(int ix = 0; ix < t.size(); ++ix)
-		cout << t[ix] << ' ';
-	cout << endl;
+		std::cout << t[ix] << ' ';
+	std::cout << '\n';
 
-	vector<int>::iterator iter;
-	cout << "ivec2.size() = " << ivec2.size() << endl;
+	std::vector<int>::iterator iter;
+	std::cout << "ivec2.size() = " << ivec2.size() << '\n';
 	for(iter = ivec2.begin(); iter < ivec2.end(); ++iter)
-		cout << *iter << ' ';
-	cout << endl;
+		std::cout << *iter << ' ';
+	std::cout << '\n';
 
 	ivec2.insert(ivec2.begin(), 5);
-	cout << "ivec2.size() = " << ivec2.size() << endl;
+	std::cout << "ivec2.size() = " << ivec2.size() << '\n';
 	for(iter = ivec2.begin(); iter < ivec2.end(); ++iter)
-		cout << *iter << ' ';
-	cout << endl;
+		std::cout << *iter << ' ';
+	std::cout << '\n';
 
 	ivec2.erase(ivec2.begin()+1);
-	cout << "ivec2.size() = " << ivec2.size() << endl;
+	std::cout << "ivec2.size() = " << ivec2.size() << '\n';
 	for(iter = ivec2.begin(); iter < ivec2.end(); ++iter)
-		cout << *iter << ' ';
-	cout << endl;
+		std::cout << *iter << ' ';
+	std::cout << '\n';
 
 	return 0;
 }

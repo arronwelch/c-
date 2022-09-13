@@ -1,21 +1,19 @@
 // 3.2.cpp
 
-#include <iostream>
-#include <vector>
-#include <list>
-#include <iterator>
-
-using namespace std;
+#include <iostream>		// std::cout
+#include <vector>		// std::vector
+#include <list>			// std::vector
+#include <iterator>		// std::iterator
 
 template <typename IteratorType >
-void my_display(IteratorType *first, IteratorType *last, ostream &os)
+void my_display(IteratorType *first, IteratorType *last, std::ostream &os)
 {
 	if (!first || !last)
 		return;
 
 	for (; first != last; ++first)
 		os << *first << ' ';
-	os << endl;
+	os << '\n';
 }
 
 template <typename IteratorType, typename elemType>
@@ -23,7 +21,7 @@ IteratorType my_find(IteratorType first, IteratorType last,
 					const elemType &value)
 {
 	for (; first != last; ++first)
-		if (value == *first)
+		if (*first == value)
 			return first;
 
 	return last; // Why?!
@@ -31,41 +29,41 @@ IteratorType my_find(IteratorType first, IteratorType last,
 
 int main(void)
 {
-	const int asize = 8;
-	int ia[asize] = { 1, 1, 2, 3, 5, 8, 13, 21 };
+	const int ASIZE = 8;
+	int ia[ASIZE] = { 1, 1, 2, 3, 5, 8, 13, 21 };
 	int search_value;
 
-	my_display(ia, ia+asize, cout);
+	my_display(ia, ia+ASIZE, std::cout);
 
 	// initialize the list and vector with the 8 elements of ia
-	vector<int> ivec(ia, ia+asize);
-	list<int> ilist(ia, ia+asize);
+	std::vector<int> ivec(ia, ia+ASIZE);
+	std::list<int> ilist(ia, ia+ASIZE);
 
 	search_value = 2;
-	int *pia = my_find(ia, ia+asize, search_value);
-	if (pia != ia+asize)
+	int *pia = my_find(ia, ia+ASIZE, search_value);
+	if (pia != ia+ASIZE)
 		// found ...
-		cout << search_value << ":found in int array" << endl;
+		std::cout << search_value << ":found in int array" << '\n';
 	else
-		cout << search_value << ":not found in int array" << endl;
+		std::cout << search_value << ":not found in int array" << '\n';
 
 	search_value = 7;
-	vector<int>::iterator ivec_iter;
+	std::vector<int>::iterator ivec_iter;
 	ivec_iter = my_find(ivec.begin(), ivec.end(), search_value);
 	if (ivec_iter != ivec.end())
 		// found ...
-		cout << search_value << ":found in int vector" << endl;
+		std::cout << search_value << ":found in int vector" << '\n';
 	else
-		cout << search_value << ":not found in int vector" << endl;
+		std::cout << search_value << ":not found in int vector" << '\n';
 
 	search_value = 21;
-	list<int>::iterator ilist_iter;
+	std::list<int>::iterator ilist_iter;
 	ilist_iter = my_find(ilist.begin(), ilist.end(), search_value);
 	if (ilist_iter != ilist.end())
 		// found ...
-		cout << search_value << ":found in int list" << endl;
+		std::cout << search_value << ":found in int list" << '\n';
 	else
-		cout << search_value << ":not found in int list" << endl;
+		std::cout << search_value << ":not found in int list" << '\n';
 
 	return 0;
 }

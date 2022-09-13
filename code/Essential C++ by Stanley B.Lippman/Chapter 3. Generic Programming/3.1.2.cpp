@@ -1,10 +1,10 @@
 // 3.1.2.cpp
 
-#include <iostream>
-#include <vector>
-using namespace std;
+#include <cstdlib>
+#include <iostream>		// std::cout
+#include <vector>		// std::vector
 
-// int* my_find(vector<int> &vec, int value)
+// int* my_find(std::vector<int> &vec, int value)
 // {
 // 	for (int ix = 0; ix < vec.size(); ++ix)
 // 		if (vec[ix] == value)
@@ -14,7 +14,7 @@ using namespace std;
 // }
 
 template <typename elemType>
-const elemType* my_find(const vector<elemType> &vec,
+const elemType* my_find(const std::vector<elemType> &vec,
 						const elemType &value)
 {
 	for (int ix = 0; ix < vec.size(); ++ix)
@@ -26,28 +26,34 @@ const elemType* my_find(const vector<elemType> &vec,
 
 int main(void)
 {
-	int ia[5] = { 42, 35, 12, 73, 19 };
-	vector<int> ivec(ia, ia+5);
+	const int ASIZE = 10;
+	std::vector<int> ivec;
 	int value = 0;
 	const int* find_value = NULL;
 
-	for (int ix = 0; ix < 5; ++ix)
-		cout << ia[ix] << ' ';
-	cout << endl;
+	// random initial vector:
+	for (int ix = 0; ix < ASIZE; ++ix) {
+		ivec.push_back(std::rand() % 255);
+	}
 
-	value = 12;
+	// print all elements of vector ivec:
+	for (int ix = 0; ix < ASIZE; ++ix)
+		std::cout << ivec[ix] << ' ';
+	std::cout << '\n';
+
+	value = ivec[3];
 	find_value = my_find(ivec, value);
 	if (find_value != 0)
-		cout << "find the value " << *find_value << endl;
+		std::cout << "find the value " << *find_value << '\n';
 	else
-		cout << "not find value " << value << endl;
+		std::cout << "not find value " << value << '\n';
 
-	value = 13;
+	value = ~ivec[3];
 	find_value = my_find(ivec, value);
 	if (find_value != 0)
-		cout << "find the value " << *find_value << endl;
+		std::cout << "find the value " << *find_value << '\n';
 	else
-		cout << "not find value " << value << endl;
+		std::cout << "not find value " << value << '\n';
 
 	return 0;
 }

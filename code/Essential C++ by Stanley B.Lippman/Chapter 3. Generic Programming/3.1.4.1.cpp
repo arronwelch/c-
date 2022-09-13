@@ -1,8 +1,7 @@
 // 3.1.4.1.cpp
 
-#include <iostream>
-#include <cstdio>
-using namespace std;
+#include <iostream>		// std::cout
+#include <cstdlib>		// std::rand()
 
 template <typename elemType>
 const elemType* my_find(const elemType *array, const int size,
@@ -27,34 +26,34 @@ int main(void)
 	const int* find_value = NULL;
 
 	for (int ix = 0; ix < SIZE; ++ix)
-		ia[ix] = rand() % 255;
+		ia[ix] = std::rand() % 255;
 
 	for (int ix = 0; ix < SIZE; ++ix)
-		cout << '\t' << ix << '\t' << ia[ix] << endl;
+		std::cout << '\t' << ix << '\t' << ia[ix] << '\n';
 
 	value = ia[0];
 	find_value = my_find(ia, SIZE, value);
 	if (find_value != 0)
-		cout << "find the value " << *find_value << endl;
+		std::cout << "find the value " << *find_value << '\n';
 	else
-		cout << "not find value " << value << endl;
+		std::cout << "not find value " << value << '\n';
 
 	value = ~ ia[0];
 	find_value = my_find(ia, SIZE, value);
 	if (find_value != 0)
-		cout << "find the value " << *find_value << endl;
+		std::cout << "find the value " << *find_value << '\n';
 	else
-		cout << "not find value " << value << endl;
+		std::cout << "not find value " << value << '\n';
 
 	// array[2]
-	cout << "ia[2] = " << ia[2] << endl;
+	std::cout << "ia[2] = " << ia[2] << '\n';
 	// *(array+2)
-	cout << "*(ia+2) = " << *(ia+2) << endl;
+	std::cout << "*(ia+2) = " << *(ia+2) << '\n';
 
 	// the address of array
-	cout << "the address of ia: \t" << ia << endl;
+	std::cout << "the address of ia: \t" << ia << '\n';
 	// the address of array+2
-	cout << "the address of ia+2: \t" << ia+2 << endl;
+	std::cout << "the address of ia+2: \t" << ia+2 << '\n';
 
 	return 0;
 }
