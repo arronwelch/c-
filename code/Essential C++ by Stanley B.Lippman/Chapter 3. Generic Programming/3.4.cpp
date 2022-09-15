@@ -58,3 +58,38 @@ while (it != ilist.end())
 if (it == ilist.end())
 	ilist.push_back(ival);
 
+string sval("Part Two");
+list<string> slist;
+// ... fill slist ...
+
+list<string>::iterator it = find(slist.begin(), slist.end(), sval);
+slist.insert(it, 8, string("dummy"));
+
+int ia1[7] = { 1, 1, 2, 3, 5, 55, 89 };
+int ia2[4] = { 8, 13, 21, 34 };
+list<int> elems(ia1, ia1+7);
+
+list<int>::iterator
+	it = find(elems.begin(), elems.end(), 55);
+
+elems.insert(it, ia2, ia2+4);
+
+list<string>::iterator
+	it = find(slist.begin(), slist.end(), str);
+slist.erase(it);
+
+list<string>::iterator
+	first = slist.begin(),
+	last = slist.end();
+
+// it1 : first element to erase
+// it2 : first element beyond elements to erase
+list<string>::iterator it1 = find(first, last, str);
+list<string>::iterator it2 = find(first, last, sval);
+
+slist.erase(it1, it2);
+
+// error: offset arithmetic is not
+// supported for list class
+slist.erase(it1, it1+num_tries);
+
