@@ -52,6 +52,10 @@ int count_occurs(const vector<int> &vec, int val)
 	return ocurs_count;
 }
 
+// <-------------->
+// Function Objects
+// <-------------->
+
 // plus<type>, minus<type>, negate<type>,
 // multiplies<type>, divides<type>, modulus<type>
 
@@ -67,3 +71,54 @@ sort(vec.begin(), vec.end(), greater<int>());
 
 binary_search(vec.begin(), vec.end(), elem, greater<int>());
 
+transform(fib.begin(), fib.end(),	// (1) range
+			pell.begin(),			// (2) the values to apply
+			fib_plus_pell.begin(),	// (3) the result of each transformation
+			plus<int>());			// (4) the operation to apply
+
+transform(fib.begin(), fib.end(),	// (1)
+			fib.begin(),			// (2)
+			fib.begin(),			// (3)
+			multiples<int>());		// (4)
+
+// Function Object Adapters
+vector<int> filter(const vector<int> &vec,
+					int val, less<int> &lt)
+{
+	vector<int> nvec;
+	vctor<int>::const_iterator iter = vec.begin();
+
+	// bind2nd(less<int>,val)
+	// binds val to the second value of less<int>
+	// less<int> now compares each value against val
+
+	while ((iter =
+			find_if(iter, vec.end(),
+						bind2nd(lt, val))) != vec.end())
+	{
+		// each time iter != vec.end(),
+		// iter addresses an element less than val
+		nvec.push_back(*iter);
+		iter++;
+	}
+	return nvec;
+}
+
+template <typename InputIterator, typename OutputIterator,
+			typename ElemType, typename Comp>
+OutputIterator
+filter(InputIterator first, InputIterator last,
+		OutputIterator at, const ElemType &val, Comp pred)
+{
+	while ((first = 
+			find_if(first, last,
+					bind2nd(pred, val))) != last)
+	{
+		// just to see what is going on ...
+		cout << "found value: " << *first << endl;
+
+		// assign value, then advance both iterators
+		*at++ = *first++;
+	}
+	return at;
+}
