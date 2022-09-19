@@ -122,3 +122,43 @@ filter(InputIterator first, InputIterator last,
 	}
 	return at;
 }
+
+int main()
+{
+	const int elem_size = 8;
+
+	int ia[elem_size] = { 12, 8, 43, 0, 6, 21, 3, 7 };
+	vector<int> ivec(ia, ia+elem_size);
+
+	// containers to hold the results of our filter()
+	int ia2[elem_size];
+	vector<int> ivec2(elem_size);
+
+	cout << "filtering tnteger array for values less than 8\n";
+	filter(ia, ia+elem_size, ia2, elem_size, less<int>());
+
+	cout << "filtering integer vector for values greater than 8\n";
+	filter(ivec.begin(), ivec.end(), ivec2.begin(),
+			elem_size, greater<int>());
+}
+
+while ((iter =
+		find_if(iter, vec.end(),
+			not1(bind2nd(less<int>,10))))
+			!= vec.end())
+
+// Here is a nontemplate version of this solution:
+vector<int> sub_vec(const vector<int> &vec, int val)
+{
+	vector<int> local_vec(vec);
+	sort(local_vec.begin(), local_vec.end());
+
+	vector<int>::iterator iter =
+		find_if(local_vec.begin(),
+				local_vec.end(),
+				bind2nd(greater<int>,val));
+
+	local_vec.erase(iter,local_vec.end());
+	return local_vec;
+}
+
