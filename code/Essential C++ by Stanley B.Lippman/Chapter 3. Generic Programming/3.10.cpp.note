@@ -23,3 +23,34 @@ int main()
 	for (int ix = 0; ix < text.size(); ++ix)
 		cout << text[ix] << ' ';
 }
+
+#include <iterator> // istream_iterator, ostream_iterator
+istream_iterator<string> is(cin);
+
+istream_iterator<string> eof;
+
+copy(it, eof, back_inserter(text));
+
+ostream_iterator<string> os(cout, " ");
+
+copy(text.begin(), text.end(), os);
+
+#include <iostream>
+#include <iterator>
+#include <algorithm>
+#include <vector>
+#include <string>
+
+int main()
+{
+	istream_iterator<string> is(cin);
+	istream_iterator<string> eof;
+
+	vector<string> text;
+	copy(is, eof, back_inserter(text));
+
+	sort(text.begin(), text.end());
+
+	ostream_iterator<string> os(cout, " ");
+	copy(text.begin(), text.end(), os);
+}
