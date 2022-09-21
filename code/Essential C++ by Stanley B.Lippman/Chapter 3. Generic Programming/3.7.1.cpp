@@ -11,6 +11,8 @@ int main()
 	words["vermeer"] = 1;
 
 	std::string tword;
+
+	std::cout << "enter \"exit()\" to stop input!\n";
 	while (std::cin >> tword && tword != "exit()")
 		words[tword]++;
 

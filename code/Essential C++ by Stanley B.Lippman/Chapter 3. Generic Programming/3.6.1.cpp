@@ -2,8 +2,8 @@
 
 #include <iostream>		// std::cout, std::endl;
 #include <vector>		// std::vector
-#include <binders.h>	// std::bind2nd()
-#include <functional>	// std::find_if
+#include <functional>	// std::bind2nd() std::less<int>()
+#include <algorithm>	// std::find_if()
 
 template <typename InputIterator, typename OutputIterator,
 			typename ElemType, typename Comp>
