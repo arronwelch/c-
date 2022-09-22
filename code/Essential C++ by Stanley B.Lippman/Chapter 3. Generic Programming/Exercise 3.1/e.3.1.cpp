@@ -9,42 +9,76 @@ reading of text is complete. As an extension, before displaying the text, allow 
 the text for the presence of a word.
 */
 
-#include <iostream>
+#include <iostream>		// std::cout, std::endl
+#include <fstream>		// std::ifstream, std::ofstream
 #include <string>
-#include <vector>
 #include <set>
 #include <map>
 
-int main()
+void InitExclusionSet(std::set<std::string> &sset)
 {
-	const std::string sa[] = { "a", "an", "or", "the", "and", "but" };
-	std::vector<std::string> svec(sa,sa+6);
-	std::set<std::string> word_exclusion(svec.begin(), svec.end());
-	std::string tword;
-	std::map<std::string,int> words;
+	std::string exclusionWord[] = { "a", "an", "or", "the", "and", "but" };
+	sset.insert(exclusionWord,exclusionWord+6);
+}
 
-	std::cout << "enter \"exit()\" to stop input\n";
-	while( std::cin >> tword && tword != "exit()")
+void ProcessFile(std::map<std::string,int> &simap, std::set<std::string> &sset, std::ifstream &ifile)
+{
+	std::string word;
+	while (ifile >> word)
 	{
-		if (word_exclusion.count(tword))
-			// present in the set of excluded words?
-			// then skip the rest of this iteration
+		if (sset.count(word))
 			continue;
+		simap[word]++;
+	}
+}
 
-		// ok: if here, not an excluded word
-		words[tword]++;
+void UserQuery(std::map<std::string,int> &simap, std::set<std::string> &sset)
+{
+	std::string queryWord;
+	std::cout << "Please enter the word you want to query: ";
+	std::cin >> queryWord;
+
+	std::map<std::string,int>::iterator iter;
+	iter = simap.find(queryWord);
+	if( iter != simap.end())
+	{
+		std::cout << "The word \"" << queryWord << "\" has appeared " << simap[queryWord] 
+		<< " times." << std::endl;
+	}
+	else if (sset.count(queryWord))
+		std::cout << "Sorry, the word \"" << queryWord << "\" is the excluded word.\n";
+	else
+		std::cout << "Sorry, the word \"" << queryWord << "\" is not found." << std::endl;
+
+}
+
+void DisplayWordCount(std::map<std::string,int> &simap, std::ofstream &ofile)
+{
+	for (std::map<std::string,int>::iterator itr = simap.begin(), mapEnd = simap.end();
+			itr != mapEnd; ++itr)
+	{
+		ofile << "key: " << itr->first
+				<< " value: " << itr->second << '\n';
+	}
+}
+
+int main(int argc, char *argv[])
+{
+	std::ifstream readFile("TestFile_3.1.txt");
+	std::ofstream writeFile("TestFile_3.1.map");
+
+	if (!readFile.is_open() || !writeFile.is_open()) {
+		std::cerr << "Sorry, the file fails to read!" << std::endl;
+		return -1;
 	}
 
-	std::string search_word;
-	std::cout << "please enter a word you want to query:\n";
-	std::cin >> search_word;
-	if(words.count(search_word))
-		std::cout << search_word << ": " << words[search_word] << '\n';
-	else
-		std::cout << "Not find " << search_word << '\n';
+	std::map<std::string,int> mapWord;
+	std::set<std::string> setExclusion;
 
-	std::map<std::string,int>::iterator it = words.begin();
-	for(; it != words.end(); ++it)
-		std::cout << "key: " << it->first
-				<< " value: " << it->second << std::endl;
+	InitExclusionSet(setExclusion);
+	ProcessFile(mapWord, setExclusion, readFile);
+	UserQuery(mapWord, setExclusion);
+	DisplayWordCount(mapWord, writeFile);
+
+	return 0;
 }
