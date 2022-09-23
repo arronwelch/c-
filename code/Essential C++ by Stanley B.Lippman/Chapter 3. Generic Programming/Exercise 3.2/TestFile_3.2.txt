@@ -1,0 +1,10 @@
+/* Exercise 3.1: e.3.1.cpp */
+
+/*
+Write a program to read a text file. Store each word in a map. The key value of the map is the
+count of the number of times the word appears in the text. Define a word exclusion set containing
+words such as a, an, or, the, and, and but. Before entering a word in the map, make sure it is not
+present in the word exclusion set. Display the list of words and their associated count when the 
+reading of text is complete. As an extension, before displaying the text, allow the user to query
+the text for the presence of a word.
+*/
