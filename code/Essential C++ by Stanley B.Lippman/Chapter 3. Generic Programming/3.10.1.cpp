@@ -12,9 +12,9 @@ int main()
 	std::string word;
 	std::vector<std::string> text;
 
-	std::cout << "you can enter \"done()\" to stop input!\n";
+	std::cout << "you can press [Enter], and then press [Ctrl+D] to EOF input!\n";
 	// ok: let's read each word in turn until done
-	while ( std::cin >> word && word != "done()")
+	while ( std::cin >> word ) // press [Enter], and then press [Ctrl-D] to EOF
 		text.push_back(word);
 
 	// ok: sort it

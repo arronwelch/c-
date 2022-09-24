@@ -12,14 +12,15 @@ int main()
 
 	std::string tword;
 
-	std::cout << "enter \"exit()\" to stop input!\n";
-	while (std::cin >> tword && tword != "exit()")
+	std::cout << "you can press [Enter], and then press [Ctrl+D] to EOF input!\n";
+	while (std::cin >> tword) // press [Enter], and then press [Ctrl-D] to EOF
 		words[tword]++;
 
 	std::map<std::string,int>::iterator it = words.begin();
 	for (; it != words.end(); ++it)
 		std::cout << "key: " << it->first
 			 << " value: " << it->second << std::endl;
+	std::cout << '\n';
 
 	int count = 0;
 	if (!(count = words["vermeer"]))
