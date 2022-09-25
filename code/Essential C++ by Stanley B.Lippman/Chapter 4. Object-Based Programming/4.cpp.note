@@ -1,0 +1,18 @@
+// 4.cpp : Chapter 4. Object-Based Programming
+
+#inclue <string>
+string pooh[4] =
+	{ "winnie", "robin", "eeyore", "piglet" };
+
+#include <vector>
+
+string dummy("dummy");
+vector<string> svec1(4);
+vector<string> svec2(4, dummy);
+vector<string> svec3(pooh, pooh+4);
+
+if (svec2 != svec3 && ! svec3.empty())
+	svec2 = svec3;
+
+if (svec2.size() == 4)
+	// all is well ...

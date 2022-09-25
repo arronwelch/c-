@@ -1,0 +1,80 @@
+// 4.1.cpp : How to Implement a Class
+
+// a forward declaration
+class Stack;
+
+// ok: these uses require a forward decalration of the class
+Stack *pt = 0;
+void process(const Stack&);
+
+class Stack {
+public:
+	// ... public interface
+private:
+	// ... private implementation
+};
+
+class Stack {
+public:
+	// each operation returns true if able to be carried out
+	// pop and peek place the string value within elem
+	bool push(const string&);
+	bool pop(string &elem);
+	bool peek(string &elem);
+
+	bool empty();
+	bool full();
+
+	// definition of size() is placed within class
+	// other members are simply declared ...
+	int size() { return _stack.size(); };// size() is an inline member of Stack
+private:
+	vector<string> _stack;
+};
+
+void fill_stack(Stack &stack, istream &is = cin)
+{
+	string str;
+	while (is >> str && ! stack.full())
+		stack.push(str);
+
+	cout << "Read in " << stack.size() << " elements\n";
+}
+
+inline bool
+Stack::empty()
+{
+	return _stack.empty();
+}
+
+bool
+Stack::pop(string &elem)
+{
+	if (empty())
+		return false;
+
+	elem = _stack.back();
+	_stack.pop_back();
+	return true;
+}
+
+inline bool Stack::full()
+	{ return _stack.size() == _stack.max_size(); }
+
+bool Stack::peek(string &elem)
+{
+	if (empty())
+		return false;
+
+	elem = _stack.back();
+	return true;
+}
+
+bool Stack::push(const string &elem)
+{
+	if (empty())
+		return false;
+
+	_stack.push_back(elem);
+	return true;
+}
