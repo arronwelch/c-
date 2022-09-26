@@ -11,7 +11,7 @@ and execute it. Both the program text file and main() must include Stack.h:
 
 #include "Stack.h"
 
-bool push(const std::string &elem)
+bool Stack::push(const std::string &elem)
 {
 	if(full())
 		return false;
@@ -20,7 +20,7 @@ bool push(const std::string &elem)
 	return true;
 }
 
-bool pop(std::string &elem)
+bool Stack::pop(std::string &elem)
 {
 	if(empty())
 		return false;
@@ -30,7 +30,7 @@ bool pop(std::string &elem)
 	return true;
 }
 
-bool peek(std::string &elem)
+bool Stack::peek(std::string &elem)
 {
 	if(empty())
 		return false;
