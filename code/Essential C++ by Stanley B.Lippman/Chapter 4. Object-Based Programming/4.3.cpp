@@ -72,3 +72,51 @@ void example(const BigClass *pbc, BigClass &rbc)
 	rbc.val();		// invokes non-const instance
 	// ...
 }
+
+// Mutable Data Member
+int sum(const Triangular &trian)
+{
+	if (! trian.length())
+		return 0;
+
+	int val, sum = 0;
+	trian.next_reset();
+	while (trian.next(val))
+		sum += val;
+
+	return sum;
+}
+
+// Will this code compile?No, at least not yet.
+
+class Triangular {
+public:
+	bool next(int &val) const;
+	void next_reset() const { _next = _beg_pos - 1; }
+	// ...
+
+private:
+	mutable int _next;
+	int _beg_pos;
+	int _length;
+};
+
+// next() and next_reset() can now modify _next and still be declared as const member
+// functions, allowing our alternative implementation of sum().
+
+int main()
+{
+	Triangular tri(4);
+	cout << tri << " -- sum of elements: "
+		 << sum(tri) << endl;
+
+	Triangular tri2(4, 3);
+	cout << tri2 << " -- sum of elements: "
+		 << sum(tri2) << endl;
+
+	Triangular tri3(4, 8);
+	cout << tri3 << " -- sum of elements: "
+		 << sum(tri3) << endl;
+
+	return 0;
+}
