@@ -29,7 +29,7 @@ private:
 };
 
 inline bool Triangular_iterator::
-operator==(const Triangular_iterator $rhs) const
+operator==(const Triangular_iterator &rhs) const
 		{ return _index == rhs._index; }
 
 if (trian1 == trian2)
@@ -41,3 +41,22 @@ if (*ptri1 == *ptri2)
 inline bool Triangular_iterator::
 operator!=(const Triangular_iterator &rhs) const
 		{ return !(*this == rhs); }
+
+// An operator can be defined either as a member operator function:
+inline int Triangular_iterator::
+operator*() const
+{
+	check_integrity();
+	return Triangular::_elems[_index];
+}
+
+// or as a nonmember operator function:
+inline int
+operator*(const Triangular_iterator &rhs)
+{
+	rhs.check_integrity();
+
+	// note: the non-member instance has no
+	// access privilege to nonpublic members
+	return Triangular::_elems[rhs._index];
+}
