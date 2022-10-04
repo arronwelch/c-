@@ -60,3 +60,73 @@ operator*(const Triangular_iterator &rhs)
 	// access privilege to nonpublic members
 	return Triangular::_elems[rhs._index];
 }
+
+inline void Triangular_iterator::
+check_integrity() const
+{
+	// we'll look at the throw expression in Chapter 7 ...
+	if (_index > Triangular::_max_elems)
+		throw iterator_overflow();
+
+	// grow vector if necessary ...
+	if (_index > Triangular::_elems.size())
+		Triangular::gen_elements(_index);
+}
+
+inline int& Triangular_iterator::
+operator++()
+{	// prefix instance
+	++_index;
+	check_integrity();
+	return Triangular::_elems[_index];
+}
+
+inline int Triangular_iterator::
+operator++(int)
+{
+	// postfix instance
+	check_integrity();
+	return Triangular::_elems[_index++];
+}
+
+++it;	// prefix
+it++;	// postfix
+
+#include "Triangular_iterator.h"
+
+class Triangular {
+public:
+	// this shields users from having to know
+	// the actual name of the iterator class ...
+	typedef Triangular_iterator iterator;
+
+	Triangular_iterator begin() const
+	{
+		return Triangular_iterator(_beg_pos);
+	}
+
+	Triangular_iterator end() const
+	{
+		return Triangular_iterator(_beg_pos+_length);
+	}
+	// ...
+
+private:
+	int _beg_pos;
+	int _length;
+	// ...
+};
+
+// Nested Types
+
+typedef existing_type new_name;
+
+Triangular::iterator it = trian.begin();
+
+iterator it = trian.begin();	// error
+
+Fibonacci::iterator		fit = fib.begin();
+Pell::iterator			pit = pel.begin();
+vector<int>::iterator	vit = _elems.begin();
+string::iterator		sit = file_name.begin();
+
