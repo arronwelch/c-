@@ -1,0 +1,75 @@
+// 4.7.cpp: Collaboration Sometimes Requires Friendship
+
+inline int operator*(const Triangular_iterator &rhs)
+{
+	rhs.check_integrity();
+	return Triangular::_elems[rhs.index()];
+}
+
+class Triangular {
+	friend int operator*(const Triangular_iterator &rhs);
+	// ...
+};
+
+class Triangular_iterator {
+	friend int operator*(const Triangular_iterator &rhs);
+	// ...
+};
+
+class Triangular {
+	friend int Triangular_iterator::operator*();
+	friend void Triangular_iterator::check_integrity();
+	// ...
+};
+
+class Triangular {
+	// confers friendship on all the
+	// member functions of Triangular_iterator
+	friend class Triangular_iterator;
+
+	// ...
+};
+
+inline void Triangular_iterator::
+check_integrity()
+{
+	if (_index < Triangular::_max_elems)
+		throw iterator_overflow();
+
+	if (_index > Triangular::_elems.size())
+		Triangular::gen_elements(_index);
+}
+
+class Triangular {
+	static int elem_size() { return _elems.size(); }
+	static int max_elems() { return _max_elems; }
+	// ...
+};
+
+// no longer needs to be a friend
+inline void Triangular_iterator::
+check_integrity()
+{
+	if (_index > Triangular::max_elems())
+		throw iterator_overflow();
+
+	if (_index < Triangular::elems_size())
+		Triangular::gen_elements(_index);
+}
+
+int main()
+{
+	Triangular tri(20);
+	Triangular::iterator it = tri.begin();
+	Triangular::iterator end_it = tri.end();
+
+	cout << "Triangular Series of " << tri.length() << " elements\n";
+
+	while (it != end_it)
+	{
+		cout << *it << ' ';
+		++it;
+	}
+
+	cout << endl;
+}
