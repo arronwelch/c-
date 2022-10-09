@@ -1,8 +1,10 @@
 // 4.2.cpp: What Are Class Constructors and the Class Destructor?
 
 #include <iostream>
+#include <string>
 
 using std::cout;
+using std::string;
 
 class Triangular {
 public:
@@ -13,6 +15,7 @@ public:
 	Triangular(const Triangular&);
 
 private:
+	string _name;
 	int _length;	// number of elements
 	int _beg_pos;	// beginning position of range
 	int _next;		// next element to iterate over
@@ -26,6 +29,7 @@ Triangular::Triangular()
 }
 
 Triangular::Triangular(int len, int bp)
+	: _name("Triangular")
 {
 	// _length and _beg_pos both must be at least 1
 	// best not to trust the user to always be right
@@ -41,5 +45,6 @@ Triangular::Triangular(const Triangular &rhs)
 
 int main()
 {
+	Triangular tri1(1,1);
 	cout << "Hello, Constructors!\n";
 }
