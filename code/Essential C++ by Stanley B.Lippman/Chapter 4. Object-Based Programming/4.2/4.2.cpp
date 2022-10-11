@@ -54,9 +54,34 @@ Triangular::Triangular(int len, int bp)
 
 // The Member Initialization List
 Triangular::Triangular(const Triangular &rhs)
-	: _length (rhs._length),
+	: _name("Triangular"),
+	  _length (rhs._length),
 	  _beg_pos(rhs._beg_pos),_next(rhs._beg_pos-1)
 {} // yes, empty!
+
+// a destructor is a user-defined class member function:
+class Matrix {
+public:
+	Matrix(int row, int col)
+		: _row(row), _col(col)
+	{
+		// constructor allocates a resource
+		// note: no error checking is shown
+		_pmat = new double[row * col];
+	}
+
+	~Matrix()
+	{
+		// destructor frees the resource
+		delete [] _pmat;
+	}
+
+	// ...
+
+private:
+	int _row, _col;
+	double *_pmat;
+};
 
 int main()
 {
@@ -65,4 +90,12 @@ int main()
 	Triangular tri3(3,3);
 	Triangular tri4(tri3);
 	cout << "Hello, Constructors!\n";
+
+	Matrix mat(4,4);
+	// constructor applied here
+
+	// ...
+
+	cout << "Hello, Destructor!\n";
+	// destructor applied here
 }
