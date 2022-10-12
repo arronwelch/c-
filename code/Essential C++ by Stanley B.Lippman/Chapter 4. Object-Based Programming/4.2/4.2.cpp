@@ -69,6 +69,7 @@ public:
 		// note: no error checking is shown
 		_pmat = new double[row * col];
 	}
+	Matrix(const Matrix&);
 
 	~Matrix()
 	{
@@ -83,6 +84,17 @@ private:
 	double *_pmat;
 };
 
+Matrix::Matrix(const Matrix &rhs)
+	: _row(rhs._row), _col(rhs._col)
+{	// create a "deep copy" of the array addressed by rhs._pmat
+	// what should go here?
+	int elem_cnt = _row * _col;
+	_pmat = new double[elem_cnt];
+
+	for (int ix = 0; ix < elem_cnt; ++ix)
+		_pmat[ix] = rhs._pmat[ix];
+}
+
 int main()
 {
 	Triangular tri1;
@@ -93,9 +105,16 @@ int main()
 
 	Matrix mat(4,4);
 	// constructor applied here
+	{
+		Matrix mat2 = mat;
+		// default memberwise copy applied
+		// ... use mat2 here
+		// destructor applied here for mat2
+		cout << "Hello, Destructor for mat2!\n";
+	}
 
-	// ...
+	// ... use mat here
 
-	cout << "Hello, Destructor!\n";
-	// destructor applied here
+	cout << "Hello, Destructor for mat!\n";
+	// destructor applied here for mat
 }
