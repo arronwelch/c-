@@ -33,8 +33,11 @@ private:
 	int _beg_pos;	// beginning position of range
 
 	// static data members are covered in Section 4.5
-	/*static*/ vector<int> _elems;
+	static vector<int> _elems;
 };
+
+// placed in program text file, such as Triangular.cpp
+vector<int> Triangular::_elems;
 
 int Triangular::elem(int pos) const
 {
