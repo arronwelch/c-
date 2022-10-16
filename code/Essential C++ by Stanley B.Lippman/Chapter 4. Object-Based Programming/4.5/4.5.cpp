@@ -2,9 +2,15 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using std::cout;
 using std::vector;
+using std::find;
+using std::ostream;
+using std::cerr;
+using std::endl;
+using std::cin;
 
 class Triangular {
 public:
@@ -12,13 +18,20 @@ public:
 	void my_print(void);
 	void my_change(int&);
 	Triangular(int len=1, int beg_pos=1);
-	int gen_elements(int);
+	static bool is_elem(int);
+	static void gen_elements(int length);
+	static void gen_elems_to_value(int value);
+	static void display(int len, int beg_pos, ostream &os = cout);
+	// ...
 private:
 	static vector<int> _elems;
 	static int _initial_size;
 	int _length;
 	int _beg_pos;
 	int _next;
+	static const int _buf_size = 1024;	// ok
+	int _buffer[_buf_size];				// ok
+	static const int _max_elems = 1024;
 };
 
 // placed in program text file, such as Triangular.cpp
@@ -48,10 +61,64 @@ Triangular::Triangular(int len, int beg_pos)
 		gen_elements(elem_cnt);
 }
 
-int Triangular::gen_elements(int cnt)
+void Triangular::
+gen_elements(int length)
 {
-	return 0;
+	if ( length < 0 || length > _max_elems)
+	{
+		// issue error message and return
+		cerr << "length " << length << " is less than 0 or large than max_elem!\n";
+		return;
+	}
+
+	if (_elems.size() < length)
+	{
+		int ix = _elems.size() ? _elems.size()+1 : 1;
+		for (; ix <= length-1; ++ix)
+			_elems.push_back(ix*(ix+1)/2);
+	}
 }
+
+bool Triangular::
+is_elem(int value)
+{
+	if (! _elems.size() ||
+		  _elems[_elems.size()-1] < value)
+			gen_elems_to_value(value);
+
+	vector<int>::iterator found_it;
+	vector<int>::iterator end_it = _elems.end();
+
+	found_it = find(_elems.begin(), end_it, value);
+	return found_it != end_it;
+}
+
+// When defined outside the class body, the static keyword is not repeated(this is also true of
+// static data members):
+void Triangular::
+gen_elems_to_value(int value)
+{
+	int ix = _elems.size();
+	if (! ix)
+	{
+		_elems.push_back(1);
+		ix = 1;
+	}
+
+	while (_elems[ix-1] < value &&
+			ix < _max_elems)
+	{
+		// cout << "elems to value: " << ix*(ix+1)/2 << endl;
+		_elems.push_back(ix*(ix+1)/2);
+		++ix;
+	}
+
+	if (ix == _max_elems)
+		cerr << "Triangular Sequence: oops: value too large "
+			 << value << " -- exceeds max size of "
+			 << _max_elems << endl;
+}
+
 
 int main()
 {
@@ -62,4 +129,24 @@ int main()
 	tri1.my_print(); // print 16
 
 	cout << "Hello, Static Class Members!\n";
+
+	char ch;
+	bool more = true;
+
+	while (more)
+	{
+		cout << "Enter value: ";
+		int ival;
+		cin >> ival;
+
+		bool is_elem = Triangular::is_elem(ival);
+		cout << ival
+			 << (is_elem ? " is " : " is not ")
+			 << "an element in the Triangular series.\n"
+			 << "Another value? (y/n) ";
+
+		cin >> ch;
+		if (ch == 'n' || ch == 'N')
+			more = false;
+	}
 }
