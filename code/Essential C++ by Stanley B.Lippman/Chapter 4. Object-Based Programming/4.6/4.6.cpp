@@ -15,9 +15,31 @@ using std::cerr;
 using std::endl;
 using std::cin;
 
-class Triangular_iterator;
+// class Triangular_iterator;
+class Triangular_iterator {
+	//friend int operator*(const Triangular_iterator &rhs);
+public:
+	// set _index to index-1 in order not to substract 1 with
+	// each element access ...
+	Triangular_iterator(int index) : _index(index-1) {}
+	bool operator==(const Triangular_iterator&) const;
+	bool operator!=(const Triangular_iterator&) const;
+	int operator*() const;
+	int& operator++();		// prefix version
+	int operator++(int);	// postfix version
+	int index() { return _index; }
+	int iterator_overflow() const;
+private:
+	void check_integrity() const;
+	int _index;
+};
 
 class Triangular {
+	// confers friendship on all the
+	// member functions of Triangular_iterator
+	friend class Triangular_iterator;
+	// This form of class friendship does not require that the definition 
+	// of the class be seen before the friend declaration.
 public:
 	// ...
 	void my_print(void);
@@ -41,8 +63,10 @@ public:
 	{
 		return Triangular_iterator(_beg_pos+_length);
 	}
-	friend int Triangular_iterator::operator*(const Triangular_iterator &rhs);
-	friend void Triangular_iterator::check_integrity();
+	//friend int Triangular_iterator::operator*(const Triangular_iterator &rhs);
+	//friend void Triangular_iterator::check_integrity();
+	
+	int length() const	{ return _length; }
 private:
 	static vector<int> _elems;
 	static int _initial_size;
@@ -151,22 +175,22 @@ gen_elems_to_value(int value)
 // 	++it;
 // }
 
-class Triangular_iterator {
-public:
-	// set _index to index-1 in order not to substract 1 with
-	// each element access ...
-	Triangular_iterator(int index) : _index(index-1) {}
-	bool operator==(const Triangular_iterator&) const;
-	bool operator!=(const Triangular_iterator&) const;
-	int operator*() const;
-	int& operator++();		// prefix version
-	int operator++(int);	// postfix version
-	int index() { return _index; }
-	friend int operator*(const Triangular_iterator &rhs);
-private:
-	void check_integrity() const;
-	int _index;
-};
+// class Triangular_iterator {
+// public:
+// 	// set _index to index-1 in order not to substract 1 with
+// 	// each element access ...
+// 	Triangular_iterator(int index) : _index(index-1) {}
+// 	bool operator==(const Triangular_iterator&) const;
+// 	bool operator!=(const Triangular_iterator&) const;
+// 	int operator*() const;
+// 	int& operator++();		// prefix version
+// 	int operator++(int);	// postfix version
+// 	int index() { return _index; }
+// 	friend int operator*(const Triangular_iterator &rhs);
+// private:
+// 	void check_integrity() const;
+// 	int _index;
+// };
 
 inline bool Triangular_iterator::
 operator==(const Triangular_iterator &rhs) const
@@ -184,6 +208,11 @@ operator*() const
 	return Triangular::_elems[_index];
 }
 
+inline int Triangular_iterator::
+iterator_overflow() const
+{
+	return 0;
+}
 // or as a nonmember operator function,
 // inline int
 // operator*(const Triangular_iterator &rhs)
@@ -226,4 +255,16 @@ operator++(int)
 int main()
 {
 	cout << "Hello, Iterator Class!\n";
+
+	Triangular tri(20);
+	Triangular::iterator it = tri.begin();
+	Triangular::iterator end_it = tri.end();
+
+	cout << "Triangular Series of " << tri.length() << " elements\n";
+	while (it != end_it)
+	{
+		cout << *it << ' ';
+		++it;
+	}
+	cout << '\n';
 }
