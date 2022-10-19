@@ -11,22 +11,27 @@ using std::cerr;
 class Triangular_iterator {
 public:
 	friend int operator*(const Triangular_iterator &rhs);
+	friend class Triangular;
 	// ...
 	int index() const { return _index; }
 	bool iterator_overflow() const;
+	//void check_integrity() const;
 private:
 	void check_integrity() const;
+	//void check_integrity() const;
 	int _index;
 };
 // class Triangular;
 
 class Triangular {
+	friend int operator*(const Triangular_iterator &rhs);
+	friend void Triangular_iterator::check_integrity() const;
 public:
 	static int elems_size() { return _elems.size(); }
 	static int max_elems() { return _max_elems; }
+private:
 	static void gen_elements(int length);
 	static vector<int> _elems;
-private:
 	static const int _max_elems = 1024;
 };
 
