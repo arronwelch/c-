@@ -10,6 +10,8 @@ using std::endl;
 using std::ostream;
 using std::vector;
 using std::find;
+using std::istream;
+using std::cin;
 
 class Triangular {
 public:
@@ -17,6 +19,24 @@ public:
 	int beg_pos() const { return _beg_pos; }
 	int length() const { return _length; }
 	int elem(int pos) const;
+
+	void beg_pos(int bp) 
+	{
+		_beg_pos = bp > 0 ? bp : 1;
+	}
+	bool length(int len)
+	{
+		if (len > _max_elems)
+		{
+			cerr << "length over the max_elems!\n";
+			return false;
+		}
+		_length = len > 0 ? len : 1;
+		int elem_cnt = _beg_pos + _length;
+		if ( _elems.size() < elem_cnt)
+			gen_elements(elem_cnt);
+		return true;
+	}
 
 	bool next(int &val) const;
 	void next_reset() { _next = _beg_pos - 1; }
@@ -119,13 +139,13 @@ gen_elems_to_value(int value)
 void Triangular::
 display(int len, int bp, ostream &os)
 {
-	int elem_cnt = bp + len;
-	for(int ix = bp; ix < elem_cnt; ++ix)
+	int elem_cnt = bp + len -1;
+	for(int ix = bp-1; ix < elem_cnt; ++ix)
 		os << _elems[ix] << ' ';
 	os << endl;
 }
 
-ostream& 
+ostream&
 operator<<(ostream &os, const Triangular &rhs)
 {
 	os << "(" << rhs.beg_pos() << ", "
@@ -135,10 +155,35 @@ operator<<(ostream &os, const Triangular &rhs)
 	return os;
 }
 
+istream&
+operator>>(istream &is, Triangular &rhs)
+{
+	char ch1, ch2;
+	int bp, len;
+
+	// given the input: (3 , 6) 6 10 15 21 28 36
+	// ch1 == '(', bp == 3, ch2 == ',', len == 6
+	is >> ch1 >> bp
+	   >> ch2 >> len;
+
+	// set the three data member of rhs ...
+	rhs.beg_pos(bp);
+	rhs.length(len);
+	rhs.next_reset();
+
+	return is;
+}
+
 int main()
 {
 	Triangular tri(6, 3);
 	cout << tri << '\n';
 
+	cout << "Please enter new Triangular(beg_pos,length):\n";
+	Triangular tri2;
+	cin >> tri2;
+
+	// let's see what we got ...
+	cout << tri2;
 	cout << "Hello, Instances of the iostream Operators!\n";
 }
