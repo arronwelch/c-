@@ -12,53 +12,52 @@
 #define GLOBALDATA_H_
 
 #include <string>
-
-using namesapce std;
+#include <iostream>
+using namespace std;
 
 class GlobalData {
 public:
-	GlobalData();
-	~GlobalData();
-	static string ProgramName();
-	{
-		return program_name;
+	GlobalData(const string program_name, const string version_stamp,
+	const int version_number, const int tests_run, const int tests_passed);
+
+	static string program_name() {
+		return _program_name;
 	}
-	static string VersionStamp()
-	{
-		return version_stamp;
+	static string version_stamp() {
+		return _version_stamp;
 	}
-	static int VersionNumber()
-	{
-		return version_number;
+	static int version_number() {
+		return _version_number;
 	}
-	static int TestsRun()
-	{
-		return tests_run;
+	static int tests_run() {
+		return _tests_run;
 	}
-	static int TestsPassed()
-	{
-		return tests_passed;
+	static int tests_passed() {
+		return _tests_passed;
 	}
-	static void ProgramName(const string &strName)
+
+	static void set_program_name(const string &new_name)
 	{
-		program_name = strName;
+		_program_name = new_name;
 	}
-	static void VersionStamp(const string &strStamp)
+	static void set_version_stamp(const string &new_stamp)
 	{
-		version_stamp = strStamp;
+		_version_stamp = new_stamp;
 	}
-	static void VersionNumber(const int &intNumber)
+	static void set_version_number(const int &new_number)
 	{
-		version_number = intNumber;
+		_version_number = new_number;
 	}
-	static void TestsRun(const int &intRun)
+	static void set_tests_run(const int &new_run)
 	{
-		tests_run = intRun;
+		_tests_run = new_run;
 	}
-	static void TestsPassed(const int &intPassed)
+	static void set_tests_passed(const int &new_passed)
 	{
-		tests_passed = intPassed;
+		_tests_passed = new_passed;
 	}
+	void display();
+	//void display(GlobalData &data);
 
 private:
 	static string _program_name;
@@ -67,11 +66,5 @@ private:
 	static int _tests_run;
 	static int _tests_passed;
 };
-
-string GlobalData::program_name;
-string GlobalData::version_stamp;
-int GlobalData::version_number;
-int GlobalData::tests_run;
-int GlobalData::tests_passed;
 
 #endif
