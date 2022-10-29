@@ -17,6 +17,6 @@ int main()
 	GlobalData::set_tests_run(89);
 	cout << endl;
 	//gd1.display(gd2);// static is shared
-	gd1.display();// static is shared
+	gd1.display();// static member data is shared
 	cout << endl;
 }

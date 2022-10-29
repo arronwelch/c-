@@ -1,0 +1,50 @@
+// Exercise 4.4:
+
+/*
+A user profile consists of a login, the actual user name, the number of times logged on, the number
+of guesses made, the number of correct guesses, the current level --- one of beginner, intermediate,
+advanced, or guru --- and the percentage correct(this latter may be computed or stored).Provide a
+UserProfile class.Support input and output,equality and inequality.The constructors should allow
+for a default user level and default login name of "guest".How might you guarantee that each
+guest login for a particular session is unique?
+*/
+
+#include "4.4.h"
+
+ostream& operator<<(ostream &os, const UserProfile &rhs)
+{	// output of the form: stanl Beginner 12 100 10 10%
+	os << rhs.login() << ' '
+	   << rhs.level() << ' '
+	   << rhs.login_count() << ' '
+	   << rhs.guess_count() << ' '
+	   << rhs.guess_correct() << ' '
+	   << rhs.guess_average() << endl;
+	return os;
+}
+
+// overkill ... but it allows a demostration ...
+map<string,UserProfile::uLevel> UserProfile::_level_map;
+
+void UserProfile::init_level_map(){
+	_level_map["Beginner"] = Beginner;
+	_level_map["Intermediate"] = Intermediate;
+	_level_map["Advanced"] = Advanced;
+	_level_map["Guru"] = Guru;
+}
+
+istream& operator>>(istream &is, UserProfile &rhs)
+{	// yes, this assumes the input is valid ...
+	string login, level;
+	is >> login >> level;
+
+	int lcount, gcount, gcorrect;
+	is >> lcount >> gcount >> gcorrect;
+	rhs.reset_login(login);
+	rhs.reset_level(level);
+
+	rhs.reset_login_count(lcount);
+	rhs.reset_guess_count(gcount);
+	rhs.reset_guess_correct(gcorrect);
+
+	return is;
+}
