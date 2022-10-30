@@ -24,7 +24,7 @@ public:
 	enum uLevel { Beginner, Intermediate, Advanced, Guru};
 
 	UserProfile();
-	UserProfile(string login, uLevel level = Beginner);
+	UserProfile(string login, uLevel = Beginner);
 
 	// default memberwise initialization and copy sufficient
 	// no explicit copy constructor or copy assignment operator
