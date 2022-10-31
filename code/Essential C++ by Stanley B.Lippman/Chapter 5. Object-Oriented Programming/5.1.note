@@ -1,0 +1,12 @@
+void loan_check_in(LibMat &mat)
+{
+	// mat actually refers to a derived class object
+	// such as Book, RentalBook, Magazines, and so on ...
+	mat.check_in();
+
+	if (mat.is_late())
+		mat.assess_fine();
+
+	if (mat.waiting_list())
+		mat.notify_available();
+}
