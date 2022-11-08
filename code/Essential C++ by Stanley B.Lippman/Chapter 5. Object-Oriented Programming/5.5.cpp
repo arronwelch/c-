@@ -22,9 +22,16 @@ protected:
 
 vector<int> Fibonacci::_elems;
 
-int Fibonacci::elem(int pos) const
+int Fibonacci::
+elem(int pos) const
 {
-	return 0;
+	if (! check_integrity(pos))
+		return 0;
+
+	if (pos > _elems.size())
+		Fibonacci::gen_elems(pos);
+
+	return _elems[pos-1];
 }
 
 ostream& Fibonacci::print(ostream &os) const
@@ -40,4 +47,18 @@ void Fibonacci::gen_elems(int pos) const
 int main()
 {
 	cout << "Hello, a Derived Class!\n";
+
+	num_sequence *ps = new Fibonacci(12, 8);
+
+	// ok: invokes Fibonacci::what_am_i() through virtual mechanism
+	ps->what_am_i();
+
+	// ok: invokes inherited num_sequence::max_elems();
+	ps->max_elems();
+
+	// error: length() is not part of num_sequence interface
+	// ps->length();
+
+	// ok: invokes Fibonacci destructor through virtual mechanism
+	delete ps;
 }
