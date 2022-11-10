@@ -22,13 +22,14 @@ public:
 
 protected:
 	virtual void gen_elems(int pos) const = 0;
-	bool check_integrity(int pos) const;
+//	bool check_integrity(int pos) const;
+	bool check_integrity(int pos, int size) const;
 
 	const static int _max_elems = 1024;
 };
 
 bool num_sequence::
-check_integrity(int pos) const
+check_integrity(int pos, int size) const
 {
 	if (pos <= 0 || pos > _max_elems)
 	{
@@ -36,6 +37,11 @@ check_integrity(int pos) const
 			<< " Cannot honor request\n";
 		return false;
 	}
+
+	if (pos > size)
+		// gen_elems() is invoked through virtual mechanism
+		gen_elems(pos);
+
 	return true;
 }
 

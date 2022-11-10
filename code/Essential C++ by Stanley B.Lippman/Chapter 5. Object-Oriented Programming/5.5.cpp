@@ -14,7 +14,7 @@ public:
 	int length() const { return _length; }
 	int beg_pos() const { return _beg_pos; }
 protected:
-	bool check_integrity(int pos) const;
+//	bool check_integrity(int pos) const;
 	virtual void gen_elems(int pos) const;
 	int _length;
 	int _beg_pos;
@@ -27,7 +27,7 @@ int Fibonacci::
 elem(int pos) const
 {
 	// now resolves to Fibonacci's instance
-	if (! check_integrity(pos))
+	if (! check_integrity(pos, _elems.size()))
 		return 0;
 
 	if (pos > _elems.size())
@@ -51,6 +51,7 @@ void Fibonacci::gen_elems(int pos) const
 		{
 			int elem = n_2 + n_1;
 			_elems.push_back(elem);
+			cout << "gen_elems: " << elem << endl;
 			n_2 = n_1; n_1 = elem;
 		}
 	}
@@ -65,51 +66,66 @@ print(ostream &os) const
 	if (end_pos > _elems.size())
 		Fibonacci::gen_elems(end_pos);
 
+	os << '(' << _beg_pos << " , " << _length << ") ";
+
 	while (elem_pos < end_pos)
 		os << _elems[elem_pos++] << ' ';
 
 	return os;
 }
 
-inline bool Fibonacci::
-check_integrity(int pos) const
-{
-	// class scope operator necessary ...
-	// unqualified name resolves to this instance!
-	if (! num_sequence::check_integrity(pos))
-		return false;
-
-	if (pos > _elems.size())
-		Fibonacci::gen_elems(pos);
-
-	return true;
-}
+// inline bool Fibonacci::
+// check_integrity(int pos) const
+// {
+// 	// class scope operator necessary ...
+// 	// unqualified name resolves to this instance!
+// 	if (! num_sequence::check_integrity(pos))
+// 		return false;
+// 
+// 	if (pos > _elems.size())
+// 		Fibonacci::gen_elems(pos);
+// 
+// 	return true;
+// }
 
 int main()
 {
-	cout << "Hello, a Derived Class!\n";
+//	cout << "Hello, a Derived Class!\n";
+//
+//	num_sequence *ps = new Fibonacci(12, 8);
+//	cout << "new Fibonacci(12, 8)\n";
+//
+//	cout << "Fibonacci(8) = " << ps->elem(8) << endl;
+//
+//	// ok: invokes Fibonacci::what_am_i() through virtual mechanism
+//	cout << "ps->what_am_i() : "
+//		<< ps->what_am_i()
+//		<< endl;
+//
+//	// ok: invokes inherited num_sequence::max_elems();
+//	cout << "ps->max_elems() : "
+//		<< ps->max_elems()
+//		<< endl;
+//
+//	cout << "display *ps:\n";
+//	cout << *ps << endl;
+//
+//	// error: length() is not part of num_sequence interface
+//	// ps->length();
+//
+//	// ok: invokes Fibonacci destructor through virtual mechanism
+//	delete ps;
 
-	num_sequence *ps = new Fibonacci(12, 8);
-	cout << "new Fibonacci(12, 8)\n";
+	Fibonacci fib;
 
-	cout << "Fibonacci(8) = " << ps->elem(8) << endl;
+	cout << "fib: beginning at element 1 for 1 element: \n"
+		<< fib << endl;
 
-	// ok: invokes Fibonacci::what_am_i() through virtual mechanism
-	cout << "ps->what_am_i() : "
-		<< ps->what_am_i()
-		<< endl;
+	Fibonacci fib2(16);
+	cout << "fib2: beginning at element 1 for 16 elements: \n"
+		<< fib2 << endl;
 
-	// ok: invokes inherited num_sequence::max_elems();
-	cout << "ps->max_elems() : "
-		<< ps->max_elems()
-		<< endl;
-
-	cout << "display *ps:\n";
-	cout << *ps << endl;
-
-	// error: length() is not part of num_sequence interface
-	// ps->length();
-
-	// ok: invokes Fibonacci destructor through virtual mechanism
-	delete ps;
+	Fibonacci fib3(8, 12);
+	cout << "fib3: beginning at element 12 for 8 elements: \n"
+		<< fib3 << endl;
 }
