@@ -31,3 +31,22 @@ int main()
 	Pentagonal penta;
 	display(cout, penta, pos);
 }
+
+ostream& operator<<(ostream &os, const num_sequence &ns)
+				{ return ns.print(os); }
+
+int main()
+{
+	Fibonacci fib(8);
+	Pell		pell(6, 4);
+	Lucas		lucas(10, 7);
+	Triangular	trian(12);
+	Square		square(6, 6);
+	Pentagonal	penta(8);
+	cout << "fib: " << fib << '\n'
+		<< "pell: " << pell << '\n'
+		<< "lucas: " << lucas << '\n'
+		<< "trian: " << trian << '\n'
+		<< "square: " << square << '\n'
+		<< "penta: " << penta << endl;
+}
