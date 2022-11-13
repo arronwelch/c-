@@ -13,3 +13,12 @@ Fibonacci::Fibonacci(const Fibonacci &rhs)
 	: num_sequence(rhs)
 {}
 
+Fibonacci& Fibonacci::
+operator=(const Fibonacci &rhs)
+{
+	if (this != &rhs)
+		// explicit invocation of the base class operator
+		num_sequence::operator=(rhs);
+
+	return *this;
+}
