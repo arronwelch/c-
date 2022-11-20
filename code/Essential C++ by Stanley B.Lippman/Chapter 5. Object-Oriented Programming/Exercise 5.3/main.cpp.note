@@ -1,0 +1,17 @@
+/* Exercise 5.3 */
+
+/*
+A type/subtype inheritance relationship in general reflects an is-a relationship: A range-checking
+ArrayRC is a kind of Array, a Book is a kind of LibraryRentalMaterial, an AudioBook is a kind of
+Book, and so on. Which of the following pairs reflects an is-a relationship?
+
+(a) member function isA_kindOf function (yes)
+(b) member function isA_kindOf class (no)
+(c) constructor isA_kindOf member function (yes)
+(d) airplane isA_kindOf vehicle (yes)
+(e) motor isA_kindOf truck (no)
+(f) circle isA_kindOf geometry (yes)
+(g) square isA_kindOf rectangle (yes)
+(h) automobile isA_kindOf airplane (no)
+(i) borrower isA_kindOf library (no)
+*/

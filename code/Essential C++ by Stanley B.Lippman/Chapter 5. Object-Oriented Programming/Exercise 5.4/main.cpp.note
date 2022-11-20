@@ -1,0 +1,25 @@
+/* Exercise 5.4 */
+
+/*
+A library supports the following categories of lending materials, each with its own check-out and
+check-in policy. Organize these into an inheritance hierarchy:
+
+book			audio book
+record			children's puppet
+video			Sega video game
+rental book		Sony Playstation video game
+CD-ROM book		Nintendo video game
+
+library_lending_material
+	book
+		audio book
+		rental book
+		CD-ROM book
+	children's puppet
+	record
+	video
+	video game
+		Sega
+		Sony Playstation
+		Nintendo
+*/

@@ -1,0 +1,34 @@
+/* Chapter 6. Programming with Templates */
+
+#include <string>
+
+class BinaryTree;
+
+BinaryTree<std::string> bt;
+bt.insert("Piglet");
+
+bt.insert("Eeyore");
+
+bt.insert("Roo");
+
+bt.insert("Tigger");
+bt.insert("Chris");
+bt.insert("Pooh");
+bt.insert("Kanga");
+
+/*
+				Piglet
+			  /		  \
+		  Eeyore      Roo
+		 /     \     /   \
+     Chris   Kanga Pooh Tigger
+*/
+
+// preorder traversal of Figure 6.1 binary tree
+Piglet, Eeyore, Chris, Kanga, Roo, Pooh, Tigger
+
+// inorder traversal of Figure 6.1 binary tree
+Chris, Eeyore, Kanga, Piglet, Pooh, Roo, Tigger
+
+// postorder traversal of Figure 6.1 binary tree
+Chris, Kanga, Eeyore, Pooh, Tigger, Roo, Piglet
