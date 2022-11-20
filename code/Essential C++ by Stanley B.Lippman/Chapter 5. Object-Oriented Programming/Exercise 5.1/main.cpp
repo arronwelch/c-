@@ -36,3 +36,11 @@ int main()
 	peek(pst, pst.top()-1);
 	std::cout << pst;
 }
+
+/*
+$ make all
+$ ./a.out
+$ once upon a time
+$ <Ctrl+Shift+d>
+$ make clean
+*/
