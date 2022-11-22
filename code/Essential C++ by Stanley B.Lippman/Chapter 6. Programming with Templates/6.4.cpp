@@ -11,46 +11,22 @@ class BTnode;
 template <typename Type>
 class BinaryTree; // forward declaration
 
-template <typename valType>
-//void BTnode<valType>::
-lchild_leaf(BTnode<valType> *leaf, BTnode<valType> *subtree);
-
-template <typename valType>
-//void BTnode<valType>::
-preorder(BTnode<valType> *pt, std::ostream &os=std::cout);//const
-
-template <typename valType>
-//void BTnode<valType>::
-displaty_val(BTnode<valType> *pt, std::ostream &os)
-{
-	os << pt->_val << ' ';
-}
-
-template <typename valType>
-//void BTnode<valType>::
-preorder(BTnode<valType> *pt, std::ostream &os) //const
-{
-	if (pt)
-	{
-		displaty_val(pt, os);
-		if (pt->_lchild) preorder(pt->_lchild, os);
-		if (pt->_rchild) preorder(pt->_rchild, os);
-	}
-}
-
 // forward declaration of BTnode class template
 template <typename valType>
-class BTnode {
+class BTnode
+{
 	friend class BinaryTree<valType>;
+
 public:
 	// ...
 	BTnode();
-	BTnode(const valType&);
+	BTnode(const valType &);
 	void insert_value(const valType &val);
-	void remove_value(const valType &val, BTnode *& prev);
-//	void preorder(BTnode *pt, std::ostream &os) const;
-//	void displaty_val(BTnode *pt, std::ostream &os=std::cout);
-//	void lchild_leaf(BTnode *leaf, BTnode *subtree);
+	void remove_value(const valType &val, BTnode *&prev);
+	static void preorder_value(BTnode *pt, std::ostream &os);
+	static void displaty_val(BTnode *pt, std::ostream &os = std::cout);
+	static void lchild_leaf(BTnode *leaf, BTnode *subtree);
+
 private:
 	valType _val;
 	int _cnt;
@@ -60,7 +36,7 @@ private:
 
 template <typename valType>
 inline BTnode<valType>::
-BTnode()
+	BTnode()
 {
 	_cnt = 1;
 	_lchild = _rchild = 0;
@@ -70,7 +46,7 @@ BTnode()
 // type parameter passed to a constructor
 template <typename valType>
 inline BTnode<valType>::
-BTnode(const valType &val)
+	BTnode(const valType &val)
 	// just in case valType is a class type
 	: _val(val)
 {
@@ -85,41 +61,47 @@ BTnode(const valType &val)
 
 template <typename valType>
 void BTnode<valType>::
-insert_value(const valType &val)
+	insert_value(const valType &val)
 {
 	if (val == _val)
-		{ _cnt++; return; }
+	{
+		_cnt++;
+		return;
+	}
 
 	if (val < _val)
 	{
-		if (! _lchild)
+		if (!_lchild)
 			_lchild = new BTnode(val);
-		else _lchild->insert_value(val);
+		else
+			_lchild->insert_value(val);
 	}
 	else
 	{
-		if (! _rchild)
+		if (!_rchild)
 			_rchild = new BTnode(val);
-		else _rchild->insert_value(val);
+		else
+			_rchild->insert_value(val);
 	}
 }
 
 template <typename valType>
 void BTnode<valType>::
-remove_value(const valType &val, BTnode *& prev)
+	remove_value(const valType &val, BTnode *&prev)
 {
 	if (val < _val)
 	{
-		if (! _lchild)
+		if (!_lchild)
 			return; // not present
-		else _lchild->remove_value(val, _lchild);
+		else
+			_lchild->remove_value(val, _lchild);
 	}
-	else
-	if (val > _val)
+	else if (val > _val)
 	{
-		if (! _rchild)
+		if (!_rchild)
 			return; // not present
-		else _rchild->remove_value(val, _rchild);
+		else
+			_rchild->remove_value(val, _rchild);
 	}
 	else
 	{
@@ -131,20 +113,42 @@ remove_value(const valType &val, BTnode *& prev)
 			prev = _rchild;
 			if (_lchild)
 			{
-				if (! prev->_lchild)
+				if (!prev->_lchild)
 					prev->_lchild = _lchild;
-				else lchild_leaf(_lchild, prev->_lchild);
+				else /*BTnode<valType>::*/
+					lchild_leaf(_lchild, prev->_lchild);
 			}
 		}
-		else prev = _lchild;
+		else
+			prev = _lchild;
 		delete this;
 	}
 }
 
+template <typename valType>
+void BTnode<valType>::
+	preorder_value(BTnode *pt, std::ostream &os)
+{
+	if (pt)
+	{
+		displaty_val(pt, os);
+		if (pt->_lchild)
+			preorder_value(pt->_lchild, os);
+		if (pt->_rchild)
+			preorder_value(pt->_rchild, os);
+	}
+}
 
 template <typename valType>
-//void BTnode<valType>::
-lchild_leaf(BTnode<valType> *leaf, BTnode<valType> *subtree)
+void BTnode<valType>::
+	displaty_val(BTnode *pt, std::ostream &os)
+{
+	os << pt->_val << ' ';
+}
+
+template <typename valType>
+void BTnode<valType>::
+	lchild_leaf(BTnode *leaf, BTnode *subtree)
 {
 	while (subtree->_lchild)
 		subtree = subtree->_lchild;
@@ -152,71 +156,89 @@ lchild_leaf(BTnode<valType> *leaf, BTnode<valType> *subtree)
 }
 
 template <typename elemType>
-class BinaryTree {
+class BinaryTree
+{
 public:
 	BinaryTree();
-	BinaryTree(const BinaryTree&);
+	BinaryTree(const BinaryTree &);
 	~BinaryTree();
-	BinaryTree& operator=(const BinaryTree&);
+	BinaryTree &operator=(const BinaryTree &);
 	void insert(const elemType &elem);
 	void remove(const elemType &elem);
-	void clear() { if (_root){ clear(_root); _root = 0; }}
+	void clear()
+	{
+		if (_root)
+		{
+			clear(_root);
+			_root = 0;
+		}
+	}
 	void remove_root();
-	void preorder() const { preorder(_root, std::cout); }
+	void preorder() const { BTnode<elemType>::preorder_value(_root, std::cout); }
 
 	bool empty() { return _root == 0; }
+
 private:
 	// BTnode must be qualified with its template parameter list
 	BTnode<elemType> *_root;
 
 	// copy a subtree addressed by src to tar
-	void copy(BTnode<elemType>*tar, BTnode<elemType>*src);
-	void clear(BTnode<elemType>*);
+	void copy(BTnode<elemType> *tar, BTnode<elemType> *src);
+	void clear(BTnode<elemType> *);
 };
 
 template <typename elemType>
 inline BinaryTree<elemType>::
-BinaryTree() : _root(0)
-{}
+	BinaryTree() : _root(0)
+{
+}
 
 template <typename elemType>
 inline BinaryTree<elemType>::
-BinaryTree(const BinaryTree &rhs)
-	{ copy(_root, rhs._root); }
+	BinaryTree(const BinaryTree &rhs)
+{
+	copy(_root, rhs._root);
+}
 
 template <typename elemType>
 inline BinaryTree<elemType>::
-~BinaryTree()
-	{ clear(); }
+	~BinaryTree()
+{
+	clear();
+}
 
 template <typename elemType>
-inline BinaryTree<elemType>&
+inline BinaryTree<elemType> &
 BinaryTree<elemType>::
 operator=(const BinaryTree &rhs)
 {
 	if (this != &rhs)
-		{ clear(); copy(_root, rhs._root); }
+	{
+		clear();
+		copy(_root, rhs._root);
+	}
 	return *this;
 }
 
 template <typename elemType>
 inline void
 BinaryTree<elemType>::
-insert(const elemType &elem)
+	insert(const elemType &elem)
 {
-	if (! _root)
+	if (!_root)
 		_root = new BTnode<elemType>(elem);
-	else _root->insert_value(elem);
+	else
+		_root->insert_value(elem);
 }
 
 template <typename elemType>
 inline void
 BinaryTree<elemType>::
-remove(const elemType &elem)
+	remove(const elemType &elem)
 {
 	if (_root)
 	{
-		if ( _root->_val == elem)
+		if (_root->_val == elem)
 			remove_root();
 		else
 			_root->remove_value(elem, _root);
@@ -225,9 +247,10 @@ remove(const elemType &elem)
 
 template <typename elemType>
 void BinaryTree<elemType>::
-clear(BTnode<elemType> *pt)
+	clear(BTnode<elemType> *pt)
 {
-	if (pt)	{
+	if (pt)
+	{
 		clear(pt->_lchild);
 		clear(pt->_rchild);
 		delete pt;
@@ -236,12 +259,13 @@ clear(BTnode<elemType> *pt)
 
 template <typename elemType>
 void BinaryTree<elemType>::
-remove_root()
+	remove_root()
 {
-	if (! _root) return;
+	if (!_root)
+		return;
 
 	BTnode<elemType> *tmp = _root;
-	if ( _root->_rchild)
+	if (_root->_rchild)
 	{
 		_root = _root->_rchild;
 
@@ -252,17 +276,19 @@ remove_root()
 			// factor out just for readability
 			BTnode<elemType> *lc = tmp->_lchild;
 			BTnode<elemType> *newlc = _root->_lchild;
-			if (! newlc)
+			if (!newlc)
 				// no subtree, let's directly attach it
 				_root->_lchild = lc;
 
 			// lchild_leaf() will travel the left subtree
 			// looking for a null left child to attach ...
 			// lchild_leaf() is a static member function
-			else lchild_leaf(lc, newlc);
+			else
+				BTnode<elemType>::lchild_leaf(lc, newlc);
 		}
 	}
-	else _root = _root->_lchild;
+	else
+		_root = _root->_lchild;
 
 	delete tmp; // ok: now we remove the node previously root
 }
@@ -285,14 +311,14 @@ int main()
 	bt.preorder();
 
 	bt.remove("Piglet");
-	std::cout <<"\n\nPreorder traversal after Piglet removal: \n";
+	std::cout << "\n\nPreorder traversal after Piglet removal: \n";
 	bt.preorder();
 
 	bt.remove("Eeyore");
 
 	std::cout << "\n\nPreorder traversal after Eeyore removal: \n";
 	bt.preorder();
+	std::cout << "\n";
 
 	return 0;
 }
-
