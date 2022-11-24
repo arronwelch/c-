@@ -11,7 +11,6 @@ class BTnode;
 template <typename Type>
 class BinaryTree; // forward declaration
 
-// forward declaration of BTnode class template
 template <typename valType>
 class BTnode
 {
@@ -24,7 +23,9 @@ public:
 	void insert_value(const valType &val);
 	void remove_value(const valType &val, BTnode *&prev);
 	static void preorder_value(BTnode *pt, std::ostream &os);
-	static void displaty_val(BTnode *pt, std::ostream &os = std::cout);
+	static void inorder_value(BTnode *pt, std::ostream &os);
+	static void postorder_value(BTnode *pt, std::ostream &os);
+	static void display_val(BTnode *pt, std::ostream &os = std::cout);
 	static void lchild_leaf(BTnode *leaf, BTnode *subtree);
 
 private:
@@ -131,7 +132,7 @@ void BTnode<valType>::
 {
 	if (pt)
 	{
-		displaty_val(pt, os);
+		display_val(pt, os);
 		if (pt->_lchild)
 			preorder_value(pt->_lchild, os);
 		if (pt->_rchild)
@@ -141,7 +142,35 @@ void BTnode<valType>::
 
 template <typename valType>
 void BTnode<valType>::
-	displaty_val(BTnode *pt, std::ostream &os)
+	inorder_value(BTnode *pt, std::ostream &os)
+{
+	if (pt)
+	{
+		if (pt->_lchild)
+			inorder_value(pt->_lchild, os);
+		display_val(pt, os);
+		if (pt->_rchild)
+			inorder_value(pt->_rchild, os);
+	}
+}
+
+template <typename valType>
+void BTnode<valType>::
+	postorder_value(BTnode *pt, std::ostream &os)
+{
+	if (pt)
+	{
+		if (pt->_lchild)
+			postorder_value(pt->_lchild, os);
+		if (pt->_rchild)
+			postorder_value(pt->_rchild, os);
+		display_val(pt, os);
+	}
+}
+
+template <typename valType>
+void BTnode<valType>::
+	display_val(BTnode *pt, std::ostream &os)
 {
 	os << pt->_val << ' ';
 }
@@ -175,6 +204,8 @@ public:
 	}
 	void remove_root();
 	void preorder() const { BTnode<elemType>::preorder_value(_root, std::cout); }
+	void inorder() const { BTnode<elemType>::inorder_value(_root, std::cout); }
+	void postorder() const { BTnode<elemType>::postorder_value(_root, std::cout); }
 
 	bool empty() { return _root == 0; }
 
@@ -318,6 +349,13 @@ int main()
 
 	std::cout << "\n\nPreorder traversal after Eeyore removal: \n";
 	bt.preorder();
+
+	std::cout << "\n\nInorder traversal after Eeyore removal: \n";
+	bt.inorder();
+
+	std::cout << "\n\nPostorder traversal after Eeyore removal: \n";
+	bt.postorder();
+
 	std::cout << "\n";
 
 	return 0;
