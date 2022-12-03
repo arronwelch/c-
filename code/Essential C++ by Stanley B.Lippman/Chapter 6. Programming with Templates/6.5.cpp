@@ -217,7 +217,7 @@ private:
 	// copy a subtree addressed by src to tar
 	void copy(BTnode<elemType> *tar, BTnode<elemType> *src);
 	void clear(BTnode<elemType> *);
-	void print(std::ostream& os)
+	void print(std::ostream& os) const
 	{ BTnode<elemType>::inorder_value(_root, os); }
 };
 
@@ -226,7 +226,7 @@ private:
 //ostream& operator<<(ostream&, const BinaryTree<int>&);
 
 template <typename elemType>
-inline std::ostream&
+std::ostream&
 operator<<(std::ostream &os, const BinaryTree<elemType> &bt)
 {
 	os << "Tree: " << std::endl;
