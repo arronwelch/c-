@@ -12,11 +12,13 @@ using namespace std;
 
 template <typename elemType>
 class Matrix {
-	friend Matrix<elemType>
-		operator+(const Matrix<elemType>&, const Matrix<elemType>& );
 
-	friend Matrix<elemType>
-	operator*(const Matrix<elemType>&, const Matrix<elemType>& );
+// NOTE!!! THIS IS NOT NEED !!!
+//	friend Matrix<elemType>
+//		operator+(const Matrix<elemType>&, const Matrix<elemType>& );
+//
+//	friend Matrix<elemType>
+//	operator*(const Matrix<elemType>&, const Matrix<elemType>& );
 
 public:
 	Matrix(int rows, int columns);
@@ -56,6 +58,7 @@ operator<<( ostream& os, const Matrix<elemType> &m)
 }
 
 template <typename elemType>
+//#define elemType float
 Matrix<elemType>
 operator+( const Matrix<elemType> &m1, const Matrix<elemType> &m2 )
 {
@@ -79,6 +82,7 @@ operator*(const Matrix<elemType> &m1, const Matrix<elemType> &m2)
 		}
 	return result;
 }
+//#undef elemType
 
 template <typename elemType>
 Matrix<elemType>::Matrix(int rows, int columns)
