@@ -12,11 +12,11 @@ using namespace std;
 
 template <typename elemType>
 class Matrix {
-	friend Matrix<elemType> 
-		operator+( const Matrix<elemType>&, const Matrix<elemType>& );
+	friend Matrix<elemType>
+		operator+(const Matrix<elemType>&, const Matrix<elemType>& );
 
 	friend Matrix<elemType>
-		operator*( const Matrix<elemType>&, const Matrix<elemType>& );
+	operator*(const Matrix<elemType>&, const Matrix<elemType>& );
 
 public:
 	Matrix(int rows, int columns);
@@ -67,7 +67,7 @@ operator+( const Matrix<elemType> &m1, const Matrix<elemType> &m2 )
 
 template <typename elemType>
 Matrix<elemType>
-operator*(Matrix<elemType> const &m1, Matrix<elemType> const &m2)
+operator*(const Matrix<elemType> &m1, const Matrix<elemType> &m2)
 {
 	// m1's columns must equal m2's rows ...
 	Matrix<elemType> result(m1.rows(), m2.cols());
@@ -180,11 +180,11 @@ int main()
 
 	log << "m3: assigned random values: " << m3 << endl;
 
-//	log << "m4 = m3 * identity: " << endl;
-//	Matrix<float> m4 = m3 * identity; log << m4 << endl;
-//	log << "m5 = m3 + m4: " << endl;
-//	Matrix<float> m5 = m3 + m4; log << m5 << endl;
-//
-//	log << "m3 += m4: " << endl;
-//	m3 += m4; log << m3 << endl;
+	log << "m4 = m3 * identity: " << endl;
+	Matrix<float> m4 = m3 * identity; log << m4 << endl;
+	log << "m5 = m3 + m4: " << endl;
+	Matrix<float> m5 = m3 + m4; log << m5 << endl;
+
+	log << "m3 += m4: " << endl;
+	m3 += m4; log << m3 << endl;
 }
