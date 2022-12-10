@@ -2,7 +2,7 @@
 
 // defined elsewhere ...
 extern void log_message(const char*);
-extern string err_message[];
+extern string err_messages[];
 extern ostream log_file;
 
 bool some_function()
@@ -12,7 +12,7 @@ bool some_function()
     // ... we'll get to this part!
 
     catch(int errno) {
-        log_message(err_message[errno]);
+        log_message(err_messages[errno]);
         status = false;
     }
     catch(const char *str) {
