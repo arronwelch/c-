@@ -43,3 +43,19 @@ check_integrity()
         throw iterator_overflow(_index, Triangular::_max_elems);
     // ...
 }
+
+// executed if element is not found
+// or if iterator_overflow exception is caught
+status = false;
+return status;
+
+inline int Triangular_iterator::
+operator*()
+{
+    check_integrity();
+    return Triangular::_elems[_index];
+}
+
+return check_integrity()
+        ? Triangular::_elems[_index]
+        : 0;
